@@ -13,17 +13,17 @@
 											<h4 class="mb-4 pb-3">Se connecter</h4>
 											<form >
                                              <div class="form-group">
-                                              <input type="email" id="email" name="username" class="form-style" placeholder="E-mail" autocomplete="off" >
+                                              <input type="email" id="email" name="username" class="form-style" placeholder="E-mail" autocomplete="off" [(ngModel)]="email">
                                               <i class="input-icon uil uil-at"></i>
                                              </div>
                                              <div class="form-group mt-2 password-input">
-                                              <input type="password" id="password" name="username" class="form-style" placeholder="Mot de passe" autocomplete="off" >
+                                              <input type="password" id="password" name="username" class="form-style" placeholder="Mot de passe" autocomplete="off" [(ngModel)]="password">
                                               <i class="bi bi-eye password-toggle-icon" ></i>
                                              </div>
 											 <div class="d-flex justify-content-center pt-3" style="margin-top: 5%;">
 												<h6  style="color: red;">* E-mail ou mot de passe incorrect *</h6>
 											  </div>
-                                             <button type="submit" class="btn mt-4">Soumettre</button>
+                                             <button type="submit" class="btn mt-4" (click)="submitForm()">Soumettre</button>
                                             </form>
 
                             				<p class="mb-0 mt-4 text-center">

@@ -33,14 +33,14 @@ body {
   
 }
 .container .form {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .form .input-box {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .input-box label {
-  margin-bottom: 100px;
+  margin-bottom: 5px;
   color: #333;
 }
 .form :where(.input-box input, .select-box) {
