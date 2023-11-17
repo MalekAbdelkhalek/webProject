@@ -12,6 +12,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   email: string = '';
 	password: string = '';
 	constructor(private userService:UserService, private http: HttpClient,
@@ -59,7 +64,7 @@ export class LoginComponent {
       }
 
   goToSignUp(){
-		console.log('chy');
+		this.router.navigate(['/signup'])
     
 	}
 }

@@ -1,4 +1,6 @@
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { userInfo } from '../userInfo';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+          
 }

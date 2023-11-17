@@ -17,11 +17,11 @@
                                               <i class="input-icon uil uil-at"></i>
                                              </div>
                                              <div class="form-group mt-2 password-input">
-                                              <input type="password" id="password" name="username" class="form-style" placeholder="Mot de passe" autocomplete="off" [(ngModel)]="password">
-                                              <i class="bi bi-eye password-toggle-icon" ></i>
+                                              <input type="{{ showPassword ? 'text' : 'password' }}"type="password" id="password" name="username" class="form-style" placeholder="Mot de passe" autocomplete="off" [(ngModel)]="password">
+                                              <i class="bi bi-eye password-toggle-icon" (click)="togglePasswordVisibility()"></i>
                                              </div>
 											 <div class="d-flex justify-content-center pt-3" style="margin-top: 5%;">
-												<h6  style="color: red;">* E-mail ou mot de passe incorrect *</h6>
+												<h6 *ngIf="fail" style="color: red;">* E-mail ou mot de passe incorrect *</h6>
 											  </div>
                                              <button type="submit" class="btn mt-4" (click)="submitForm()">Soumettre</button>
                                             </form>

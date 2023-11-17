@@ -1,60 +1,111 @@
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  </head>
-  <body>
-    <section class="container">
-      <header>Registration Form</header>
-      <form action="#" class="form">
-        <div class="input-box">
-          <label>Full Name</label>
-          <input type="text" placeholder="Enter full name" required />
-        </div>
-        <div class="input-box">
-          <label>Password</label>
-          <input type="password" placeholder="Enter password" required />
-        </div>
-        <div class="input-box">
-          <label>Confirm Password</label>
-          <input type="password" placeholder="Confirm password" required />
-        </div>
-        <div class="input-box">
-          <label>Email Address</label>
-          <input type="text" placeholder="Enter email address" required />
-        </div>
-        
-
-        <div class="column">
-          <div class="input-box">
-            <label>Phone Number</label>
-            <input type="tel" placeholder="Enter phone number" required />
-          </div>
-          <div class="input-box">
-            <label>Birth Date</label>
-            <input type="date"
-            pattern="[0-9]{10}" 
-            placeholder="Enter birth date" required />
-          </div>
-        </div>
-        <div class="gender-box">
-          <h3>Gender</h3>
-          <div class="gender-option">
-            <div class="gender">
-              <input type="radio" id="check-male" name="gender" checked />
-              <label for="check-male">male</label>
+<section class="h-80 bg-dark">
+  <div class="container py-5 h-100" >
+    <div class="row d-flex justify-content-center align-items-center h-100" >
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6 d-none d-xl-block">
+              <img src="../../assets/images/signupPic.webp"
+                alt="Sample photo" class="img-fluid"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .300rem;" />
             </div>
-            <div class="gender">
-              <input type="radio" id="check-female" name="gender" />
-              <label for="check-female">Female</label>
+            <div class="col-xl-6">
+              <div class="card-body p-md-5 text-black">
+                <h3 class="mb-5 text-uppercase">inscrivez-vous maintenant</h3>
+
+                <div class="row" >                             
+                <div class="d-flex justify-content-center pt-3" style="margin-top: -5%;">
+                  <h5 *ngIf="fail" style="color: red;">* E-mail ou téléphone déjà utilisé *</h5>
+                </div>
+                  <div class="col-md-6 mb-4" style="margin-top: 4%;">
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1m" >Prénom</label>
+                      <input type="text" id="form3Example1m" class="form-control form-control-lg" [(ngModel)]="firstname" required="true"/>  
+                      <div class="invalid-field" *ngIf="!firstname && clicked">Veuillez entrer votre prénom</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4" style="margin-top: 4%;">
+                    <div class="form-outline">
+                      <label class="form-label" for="form3Example1n" >Nom</label>
+                      <input type="text" id="form3Example1n" class="form-control form-control-lg" [(ngModel)]="lastname"/>  
+                      <div class="invalid-field" *ngIf="!lastname && clicked">Veuillez entrer votre nom</div>                     
+                    </div>
+                  </div>
+              </div>
+
+                <div class="form-outline mb-4 password-input">
+                  <label class="form-label" for="form3Example8">Mot de passe</label>
+                  <input type="{{ showPassword ? 'text' : 'password' }}" type="text" id="form3Example8" class="form-control form-control-lg" [(ngModel)]="password"/>  
+                  <i class="bi bi-eye password-toggle-icon" (click)="togglePasswordVisibility()" *ngIf="password"></i>
+                  <div class="invalid-field" *ngIf="!password && clicked">Veuillez saisir votre mot de passe</div>  
+                </div>
+
+                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                  <h6 class="mb-0 me-4">Sexe: </h6>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
+                      value="Female"  [(ngModel)]="gender" />
+                    <label class="form-check-label" for="femaleGender">Femme</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
+                      value="Male"  [(ngModel)]="gender"/>
+                    <label class="form-check-label" for="maleGender">Homme</label> 
+                  </div>
+                  <div class="invalid-field" *ngIf="!gender && clicked">Veuillez sélectionner votre sexe</div>  
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="mb-2">
+                      <label class="form-check-label">emploi</label>
+                    </div>
+                    <select class="select form-select" [(ngModel)]="job">
+                      <option value="Dev Web">développement web</option>
+                      <option value="Dev Mobile">développement Mobile</option>
+                      <option value="DevOps">DevOps</option>
+                    </select>
+                    <div class="invalid-field" *ngIf="!job && clicked">Veuillez sélectionner votre emploi</div>  
+                  </div>
+                  
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label for="birthday" class="form-label" >date de naissance</label>
+                      <input type="date" id="birthday" class="form-control form-control-lg" [(ngModel)]="birthday"/>
+                      <div class="invalid-field" *ngIf="!birthday && clicked">Veuillez choisir votre date de naissance</div>  
+                    </div>
+                  </div>
+                </div>
+ 
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example90">E-mail</label>
+                  <input type="text" id="form3Example90" class="form-control form-control-lg"  [(ngModel)]="email"/>
+                  <div class="invalid-field" *ngIf="!email && clicked">Veuillez entrer votre E-mail</div>  
+                </div>
+
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example99" >Téléphone</label>
+                  <input type="text" id="form3Example99" class="form-control form-control-lg" [(ngModel)]="phone"/>
+                  <div class="invalid-field" *ngIf="!phone && clicked">Veuillez entrer votre numéro de téléphone</div>  
+                </div>
+
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example97" >Adresse</label>
+                  <input type="text" id="form3Example97" class="form-control form-control-lg" [(ngModel)]="address"/>
+                  <div class="invalid-field" *ngIf="!address && clicked">Veuillez entrer votre adresse</div>  
+                </div>
+
+                <div class="d-flex justify-content-end pt-3">
+                  <button type="button" class="btn btn-warning btn-lg ms-2" (click)="onclick(email,phone)"  >Soumettre </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <button>Submit</button>
-      </form>
-    </section>
-  </body>
-</html>
+      </div>
+    </div>
+  </div>
+</section>

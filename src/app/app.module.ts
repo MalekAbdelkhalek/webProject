@@ -9,6 +9,8 @@ import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 
@@ -24,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule ,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
     
   ],
   providers: [],
