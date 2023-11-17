@@ -1,0 +1,39 @@
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+.password-input {
+  position: relative;
+}
+
+.password-input input[type="password"] {
+  padding-right: 35px; /* Space for the eye icon */
+}
+
+.password-toggle-icon-1{
+  position: absolute;
+  top: 23%;
+  right: 30px;
+  transform: translateY(-50%);
+  cursor: pointer;
+} 
+
+.password-toggle-icon-2 {
+  position: absolute;
+  top: 54%;
+  right: 30px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.addEXPENSE:hover {
+    opacity: 0.5;
+  }
+  .col .text-right {
+    margin-left: -20%;
+  }
+
+
+  /* Styles specific to big screens */
+  @media (max-width: 550px) {
+    .col .text-right {
+      margin-left: 0px;
+    }
+  }

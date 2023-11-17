@@ -19,9 +19,6 @@ export class SignupComponent {
   birthday!: Date;	
   email: string = '';
   phone: string = '';
-  address: string = '';
-  job: string = '';
-
 
   showPassword = false;
 
@@ -69,7 +66,6 @@ export class SignupComponent {
       gender:this.gender,
       roles: [
         { id: 2 , name: "ROLE_USER" },
-        // Add more roles if needed
       ]
       
     };

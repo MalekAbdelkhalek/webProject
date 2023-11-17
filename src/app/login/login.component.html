@@ -10,7 +10,7 @@
 								<div class="card-front">
 									<div class="center-wrap">
 										<div class="section text-center">
-											<h4 class="mb-4 pb-3">Se connecter</h4>
+											<h4 class="mb-4 pb-3">Log in</h4>
 											<form >
                                              <div class="form-group">
                                               <input type="email" id="email" name="username" class="form-style" placeholder="E-mail" autocomplete="off" [(ngModel)]="email">
@@ -21,13 +21,13 @@
                                               <i class="bi bi-eye password-toggle-icon" (click)="togglePasswordVisibility()"></i>
                                              </div>
 											 <div class="d-flex justify-content-center pt-3" style="margin-top: 5%;">
-												<h6 *ngIf="fail" style="color: red;">* E-mail ou mot de passe incorrect *</h6>
+												<h6 *ngIf="fail" style="color: red; font-size: 15px;">* Email or password incorrect*</h6>
 											  </div>
-                                             <button type="submit" class="btn mt-4" (click)="submitForm()">Soumettre</button>
+                                             <button type="submit" class="btn mt-4" (click)="submitForm()">Submit</button>
                                             </form>
 
                             				<p class="mb-0 mt-4 text-center">
-																			<a class="link" (click)="goToSignUp()">Pas un membre? Enregistrer</a>
+																			<a class="link" (click)="goToSignUp()">Not a member? register</a>
 																		</p>
 
 				      					</div>

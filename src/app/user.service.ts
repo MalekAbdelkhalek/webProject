@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
+import { changePasswordForm } from './changePasswordForm';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,14 @@ export class UserService {
   
   login(username: string, password: string) {
     return this.http.post<any>(`${this.apiServerUrl}/api/login`, { username, password });
+  }
+  refreshToken(headers:HttpHeaders) {
+    return this.http.get<any>(`${this.apiServerUrl}/api/token/refresh`, { headers});
+  }
+  changeCurrentUserPassword(headers:HttpHeaders,changePasswordForm:changePasswordForm){
+    return this.http.put<any>(`${this.apiServerUrl}/api/change-password/user`,changePasswordForm, { headers});
+  }
+  changeUserPassword(headers:HttpHeaders,email:String,changePasswordForm:changePasswordForm){
+    return this.http.put<any>(`${this.apiServerUrl}/api/change-password/user/${email}`,changePasswordForm, { headers});
   }
 }
