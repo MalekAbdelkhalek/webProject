@@ -1,4 +1,6 @@
 @import '~bootstrap-icons/font/bootstrap-icons.css';
+
+
 .password-input {
   position: relative;
 }
@@ -52,4 +54,17 @@
         box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
       }
 
-      
+
+.col-xl-6 d-none d-xl-block
+{
+  height: 100%;
+}
+
+
+.img-fluid{
+  height: 100%;
+}
+
+.mb-0 me-4{
+  color: red;
+}

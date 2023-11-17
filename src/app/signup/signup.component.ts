@@ -58,6 +58,7 @@ export class SignupComponent {
       
   onclick(email:string,phone:string){
     this.clicked=true;
+    
     this.request = {
       firstname: this.firstname,
       lastname: this.lastname,
@@ -70,6 +71,7 @@ export class SignupComponent {
         { id: 2 , name: "ROLE_USER" },
         // Add more roles if needed
       ]
+      
     };
     console.log(this.request);
 
