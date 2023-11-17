@@ -283,7 +283,7 @@ export class HomeComponent {
   }
   public onLogout(){
     this.logoutcurrentUser();
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
  incorrect=false;
  currentPassword: string = '';

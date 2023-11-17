@@ -74,7 +74,7 @@ export class SignupComponent {
     if (!this.firstname || !this.lastname || !this.password || !this.gender
        || !this.birthday || !this.email || !this.phone){
       console.log("error12");
-      this._snackBar.open("Échec de l'inscription. ektb kol chy et réessayer", '', {
+      this._snackBar.open("Registration failed. Please fill in all the required fields and try again.", '', {
         duration: 3000,
         panelClass: 'custom-snackbar',
       });
@@ -82,7 +82,7 @@ export class SignupComponent {
     this.userinfoService.register(this.request).subscribe(
       (response) => {
         if(response.msg_displayed==='failed to sign up'){
-          this._snackBar.open("Échec de l'inscription. Veuillez vérifier les informations fournies et ré+ssayer", '', {
+          this._snackBar.open("Registration failed. Please verify the provided information and try again.", '', {
             duration: 3000,
             panelClass: 'custom-snackbar',
           });
@@ -100,7 +100,7 @@ export class SignupComponent {
           this.tokenService.setRefreshToken(this.refreshtoken);
       
           //this.testUser(this.email,this.phone);
-          this._snackBar.open('Inscription réussie ! Bienvenue sur notre plateforme.', '', {
+          this._snackBar.open('Registration successful! Welcome to our platform.', '', {
             duration: 3000,
             panelClass: 'custom-snackbar',
           });    
@@ -115,9 +115,6 @@ export class SignupComponent {
     );
 
     }
-
-
-
 
 
 }

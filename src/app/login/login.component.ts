@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokensService } from '../tokens.service';
 import { UserService } from '../user.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserInfoService } from '../user-info.service';
+import { userInfo } from '../userInfo';
 
 
 @Component({
@@ -19,13 +21,34 @@ export class LoginComponent {
   }
   email: string = '';
 	password: string = '';
-	constructor(private userService:UserService, private http: HttpClient,
-		private tokenSerivce: TokensService,private router: Router,private _snackBar: MatSnackBar){}
+	constructor(private userService:UserService, private http: HttpClient,private userinfoService:UserInfoService,
+		private tokenSerivce: TokensService,private route: ActivatedRoute,private router: Router,private _snackBar: MatSnackBar){}
 
     accesstoken!:string;
     refreshtoken!:string;
   
     fail=false;
+    /*public user!:userInfo;
+    public findCurrentUser(): void {
+      // Set the authorization header with the access token
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${this.accesstoken}`,
+      });
+      console.log(headers);
+  
+      this.userinfoService.findCurrentUser(headers)
+        .subscribe(
+          (response: userInfo) => {
+            this.user = response;
+            console.log('success');
+            console.log(response);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+            console.log('not success');
+          }
+        );
+        }*/
     submitForm() {
   
       console.log('Email:', this.email);
@@ -46,7 +69,7 @@ export class LoginComponent {
         this.tokenSerivce.setRefreshToken(this.refreshtoken);
         console.log("test: "+this.tokenSerivce.getRefreshtoken());
   
-        this.router.navigate(['/home'])
+        this.router.navigate(['home'])
         }else{
           this._snackBar.open("Échec de connexion. Veuillez vérifier les informations fournies et réessayer", '', {
             duration: 3000,

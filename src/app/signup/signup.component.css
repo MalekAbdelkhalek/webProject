@@ -68,3 +68,7 @@
 .mb-0 me-4{
   color: red;
 }
+.submit:hover{
+opacity: 70%;
+border: none;
+}
