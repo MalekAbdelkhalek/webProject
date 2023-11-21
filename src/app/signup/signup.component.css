@@ -1,6 +1,15 @@
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+}
 
+.form-label,
+.form-control,
+.invalid-field{
+  font-family:Comic Sans MS;
+}
 .password-input {
   position: relative;
 }

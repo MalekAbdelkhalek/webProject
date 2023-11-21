@@ -17,8 +17,9 @@
   color: #102770;
 }
 .body{
+  background-image: url('../../assets/images/loginBG.png');
 	font-family: 'Poppins', sans-serif;
-	font-weight: 300;
+	font-weight: 00;
 	font-size: 15px;
 	line-height: 1.7;
 	color: #c4c3ca;

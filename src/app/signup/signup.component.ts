@@ -52,7 +52,7 @@ export class SignupComponent {
   }
   fail=false;
   clicked=false;
-      
+  error:string='';
   onclick(email:string,phone:string){
     this.clicked=true;
     
@@ -73,11 +73,20 @@ export class SignupComponent {
 
     if (!this.firstname || !this.lastname || !this.password || !this.gender
        || !this.birthday || !this.email || !this.phone){
-      console.log("error12");
       this._snackBar.open("Registration failed. Please fill in all the required fields and try again.", '', {
         duration: 3000,
         panelClass: 'custom-snackbar',
       });
+    } else if (this.firstname.length > 20 ) {
+      this.error = "* First name cannot exceed 20 characters * ";
+    } else if (this.lastname.length > 20 ) {
+      this.error = "* Last name cannot exceed 20 characters *";
+    } else if (!this.isValidEmail(this.email)) {
+      this.error = "* Please enter a valid email address *";
+    } else if (this.password.length < 7 || !this.isStrongPassword(this.password)) {
+      this.error = "* Password should have a minimum length of 7 characters and include at least one letter, one number, and one special character *";
+    } else if (new Date(this.birthday).getFullYear() > 2015) {
+      this.error = "* Birthdate cannot be set beyond the year 2015 *";
     }else{
     this.userinfoService.register(this.request).subscribe(
       (response) => {
@@ -116,6 +125,20 @@ export class SignupComponent {
 
     }
 
+}
+isValidEmail(email: string): boolean {
+  // Basic email validation using a regular expression
+  // You can use a more sophisticated regular expression for more accurate validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+isStrongPassword(password: string): boolean {
+  // Password must have a minimum length of 7 characters
+  // It must contain at least one letter, one number, and one special character
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/;
+  return passwordRegex.test(password);
+}
 
 }
-}
+

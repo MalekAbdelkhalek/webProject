@@ -1,4 +1,4 @@
-<section class="h-80 bg-dark"  style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');background-size: cover;background-position: center;height: 100vh;">
+<section class="h-80 bg-dark"  style="background-image: url('../../assets/images/signupBG.png'); height: 100vh; " >
   <div class="container py-5 h-100" >
     <div class="row d-flex justify-content-center align-items-center h-100" >
       <div class="col">
@@ -6,15 +6,15 @@
           <div class="row g-0">
             <div class="col-xl-6 d-none d-xl-block">
               <img src="../../assets/images/Expenses.jpg"
-                alt="Sample photo" class="img-fluid" />
+                alt="Sample photo" class="img-fluid" /> 
             </div>
             <div class="col-xl-6">
               <div class="card-body p-md-5 text-black">
-                <h3 class="mb-2 text-uppercase" style="color:#1CA49A; font-size: 20px;margin-left: 190px;"><b>Register now</b></h3>
+                <h3 class="mb-2 text-uppercase" style="color:#1CA49A; font-size: 20px;"><b>Register now</b></h3>
 
                 <div class="row" >                             
-                <div class="d-flex justify-content-center pt-3" style="margin-top: -5%;">
-                  <h5 *ngIf="fail" style="color: red;">* Email or phone already in use *</h5>
+                <div class="d-flex justify-content-center pt-3" >
+                  <h5  style="color: red; font-family:Comic Sans MS;">{{ error }}</h5>
                 </div>
                   <div class="col-md-6 mb-4" style="margin-top: 4%;">
                     <div class="form-outline">
@@ -47,29 +47,29 @@
                 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example99" >phone</label>
-                  <input type="text" id="form3Example99" class="form-control form-control-lg" [(ngModel)]="phone"/>
+                  <input type="number" id="form3Example99" class="form-control form-control-lg no-spinner" [(ngModel)]="phone"
+                  />
                   <div class="invalid-field" *ngIf="!phone && clicked">Please enter your phone</div>  
                 </div>
 
-                <div class="row mb-4">
-                  <div class="col-md-6" style="margin-top: 5%;">
-                    <div class="d-md-flex align-items-center">
-                      <h6 class="mb-0 me-4" style="font-size: 14px; margin-top: 10px; margin-left: 10px;">Sex:</h6>
-                
-                      <div class="form-check form-check-inline mb-0 me-4">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="Female"
-                          [(ngModel)]="gender" style="margin-top: 10px;"/>
+                <div class="row mb-4" style="margin-top: 2%;">
+                  <div class="col-md-6" >
+                    <div class="d-md-flex align-items-center flex-column">
+                      <h6 class="mb-0 me-4" style="font-size: 14px; font-family:Comic Sans MS;">Sex</h6>
+                     <div class="flex-column" style="margin-top: 5%; font-family:Comic Sans MS;">
+                      <div class="form-check form-check-inline mb-0 me-4 ">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender" value="Female" [(ngModel)]="gender" style="margin-top: 10px;" />
                         <label class="form-check-label" for="femaleGender" style="margin-top: 10px;">Female</label>
                       </div>
                       <div class="form-check form-check-inline mb-0 me-4">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender" value="Male"
-                          [(ngModel)]="gender" style="margin-top: 10px;"/>
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender" value="Male" [(ngModel)]="gender" style="margin-top: 10px;" />
                         <label class="form-check-label" for="maleGender" style="margin-top: 10px;">Male</label>
                       </div>
-                      <div class="invalid-field" *ngIf="!gender && clicked">Please enter your sex</div>
+                     </div>
+                      <div class="invalid-field" *ngIf="!gender && clicked" >Please enter your sex</div>
                     </div>
                   </div>
-                
+    
                   <div class="col-md-6">
                     <div class="form-outline">
                       <label for="birthday" class="form-label">Birthdate</label>
@@ -80,7 +80,7 @@
                 </div>
                 
                 <div class="d-flex justify-content-end pt-3">
-                  <button type="button"  class="btn btn-warning btn-lg ms-2 submit" (click)="onclick(email,phone)"  style="width: 190px;height: 60px;background-color:#1CA49A; color: white;margin-right: 180px;margin-top: 15px; " >Submit</button>
+                  <button type="button"  class="btn btn-warning btn-lg ms-2 submit" (click)="onclick(email,phone)"  style="width: 30%;height: 60px;background-color:#1CA49A; color: white;margin-right: 160px;margin-top: 5px; " >Submit</button>
                 </div>
               </div>
             </div>
