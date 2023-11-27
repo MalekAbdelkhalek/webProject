@@ -13,6 +13,16 @@ import { UserService } from '../user.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  public onOpenwaitingForConfirmationModal(): void {
+    const container = document.getElementById('session-container');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-target', '#waitingForConfirmationModal');
+    container?.appendChild(button);
+    button.click();
+  }
   firstname: string = '';
   lastname: string = '';
   password: string = '';
@@ -102,6 +112,7 @@ export class SignupComponent {
           console.log('Registration failed' , response);
         }
         else if(response.msg_displayed==='waiting for confirmation'){
+          this.onOpenwaitingForConfirmationModal();
           this.loading=false;
           this.waitingForConfirmation=true;
           console.log('waiting for confirmation' , response);

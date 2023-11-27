@@ -97,12 +97,18 @@
     <!-- <div class="spinner"></div> -->
   </div>
 </div>
-<div class="container mt-5" *ngIf="waitingForConfirmation">
-  <div class="card mx-auto" style="max-width: 400px;">
-    <div class="card-body">
-      <h5 class="card-title">Email Confirmation</h5>
-      <p class="card-text">Thank you for registering! Please check your Gmail for the confirmation email and click the button below after confirming in Gmail.</p>
-      <button class="btn btn-primary" (click)="checkEnable()">Check Email Confirmation</button>
+
+
+<!-- Add a wrapper div around your content -->
+<div class="sky-blue-background">
+  <div class="container mt-5" *ngIf="waitingForConfirmation">
+    <div class="card mx-auto confirmation" style="max-width: 600px;">
+      <div class="card-body confirmation">
+        <h5 class="card-title"><b>Email Confirmation</b></h5>
+        <p class="card-text">Thank you for registering! Kindly check your Gmail for the confirmation email. Once confirmed in Gmail, please click the button below.</p>
+        <button class="btn btn-primary" (click)="checkEnable()">Check Email Confirmation</button>
+      </div>
     </div>
   </div>
 </div>
+
