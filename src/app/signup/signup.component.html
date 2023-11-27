@@ -1,4 +1,4 @@
-<section class="h-80 bg-dark"  style="background-image: url('../../assets/images/signupBG.png'); height: 100vh; " >
+<section class="h-80 bg-dark"  style="background-image: url('../../assets/images/signupBG.png'); height: 100vh; " *ngIf="!waitingForConfirmation">
   <div class="container py-5 h-100" >
     <div class="row d-flex justify-content-center align-items-center h-100" >
       <div class="col">
@@ -90,3 +90,19 @@
     </div>
   </div>
 </section>
+<div *ngIf="loading" class="loading-spinner-overlay">
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <mat-spinner diameter="50"></mat-spinner>
+    <!-- Or use an HTML/CSS spinner if not using Angular Material -->
+    <!-- <div class="spinner"></div> -->
+  </div>
+</div>
+<div class="container mt-5" *ngIf="waitingForConfirmation">
+  <div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body">
+      <h5 class="card-title">Email Confirmation</h5>
+      <p class="card-text">Thank you for registering! Please check your Gmail for the confirmation email and click the button below after confirming in Gmail.</p>
+      <button class="btn btn-primary" (click)="checkEnable()">Check Email Confirmation</button>
+    </div>
+  </div>
+</div>

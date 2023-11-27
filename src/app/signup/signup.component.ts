@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { UserInfoService } from '../user-info.service';
 import { TokensService } from '../tokens.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +30,7 @@ export class SignupComponent {
   refreshtoken!:string;
   sharedData: any;
   form!: FormGroup;
-  constructor(private userinfoService:UserInfoService,
+  constructor(private userinfoService:UserInfoService,private userService:UserService,
     private tokenService: TokensService,  private router: Router,private http: HttpClient,
      private _snackBar: MatSnackBar,private fb: FormBuilder) {
   }
@@ -50,7 +51,8 @@ export class SignupComponent {
     };*/
   
   }
-  fail=false;
+  loading=false;
+  waitingForConfirmation=false;
   clicked=false;
   error:string='';
   onclick(email:string,phone:string){
@@ -88,18 +90,27 @@ export class SignupComponent {
     } else if (new Date(this.birthday).getFullYear() > 2015) {
       this.error = "* Birthdate cannot be set beyond the year 2015 *";
     }else{
-    this.userinfoService.register(this.request).subscribe(
+      this.loading=true;
+      this.userinfoService.register(this.request).subscribe(
       (response) => {
         if(response.msg_displayed==='failed to sign up'){
+          this.loading=false;
           this._snackBar.open("Registration failed. Please verify the provided information and try again.", '', {
             duration: 3000,
             panelClass: 'custom-snackbar',
           });
           console.log('Registration failed' , response);
-          this.fail=true;
         }
-        else{
-         
+        else if(response.msg_displayed==='waiting for confirmation'){
+          this.loading=false;
+          this.waitingForConfirmation=true;
+          console.log('waiting for confirmation' , response);
+          setTimeout(() => {
+            this.waitingForConfirmation = false;
+          }, 15 * 60  * 1000);
+        }
+        else if(response.msg_displayed==='signed up successfully'){
+          this.loading=false;
           console.log('Registration successful:', response);
           this.accesstoken = response.access_token;
           this.refreshtoken = response.refresh_token;
@@ -108,9 +119,8 @@ export class SignupComponent {
           this.tokenService.setAccessToken(this.accesstoken);
           this.tokenService.setRefreshToken(this.refreshtoken);
       
-          //this.testUser(this.email,this.phone);
           this._snackBar.open('Registration successful! Welcome to our platform.', '', {
-            duration: 3000,
+            duration: 8000,
             panelClass: 'custom-snackbar',
           });    
           this.router.navigate(['/home']);
@@ -119,13 +129,35 @@ export class SignupComponent {
       },
       (error) => {
       console.error('Registration failed:', error);
-      this.fail=true;
       }
     );
+    
 
     }
 
 }
+public checkEnable(): void {
+  // Set the authorization header with the access token
+
+  this.userService.checkEnable(this.email)
+    .subscribe(
+      (response: Boolean) => {
+        console.log(response);
+        if(response===false){
+          this._snackBar.open('Please confirm your email before proceeding.', '', {
+            duration: 3000,
+            panelClass: 'custom-snackbar',
+          });    
+        }else{
+          this.onclick(this.email,this.password);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        console.log('not success');
+      }
+    );
+    }
 isValidEmail(email: string): boolean {
   // Basic email validation using a regular expression
   // You can use a more sophisticated regular expression for more accurate validation

@@ -67,7 +67,6 @@ export class LoginComponent {
         console.log("refreshToken:", this.refreshtoken);
         this.tokenSerivce.setAccessToken(this.accesstoken);
         this.tokenSerivce.setRefreshToken(this.refreshtoken);
-        console.log("test: "+this.tokenSerivce.getRefreshtoken());
   
         this.router.navigate(['home'])
         }else{

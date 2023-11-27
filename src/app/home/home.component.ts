@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { userInfo } from '../userInfo';
 import { UserInfoService } from '../user-info.service';
 import { TokensService } from '../tokens.service';
-import { environment } from 'src/environment/environment';
 import { Router } from '@angular/router';
 import {jwtDecode} from 'jwt-decode';
 import { UserService } from '../user.service';
@@ -71,7 +70,7 @@ export class HomeComponent {
     button.click();
   }
   public goToLogin(){
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
  
 
@@ -135,28 +134,29 @@ export class HomeComponent {
     this.refreshtoken = this.tokenService.getRefreshtoken();
     console.log("access token: "+this.accesstoken);
     console.log("refresh token: "+this.refreshtoken);
-    this.findCurrentUser();
+    this.findCurrentUser();    
+      
+    // Check accessToken expiration periodically
+    setInterval(() => {
+      if(!this.accessTokenExpired){
+        console.log("15secs")
+        this.checkAccessTokenExpiration();
+      if(this.accessTokenExpired && !this.refreshTokenExpired){
+        this.refreshToken();
+      }}
+    }, 15000); // Adjust the interval as needed
     
-      // Check refreshToken expiration periodically
-      setInterval(() => {
-        if(!this.refreshTokenExpired){
-        console.log("second")
+    
+    // Check refreshToken expiration periodically
+    setInterval(() => {
+      if(!this.refreshTokenExpired){
+        console.log("120secs")
         this.checkRefreshTokenExpiration();
-        if(this.refreshTokenExpired){
-          this.onOpenSessionExpired();
-          this.accessTokenExpired=true;
+      if(this.refreshTokenExpired){
+        this.onOpenSessionExpired();
+        this.accessTokenExpired=true;
         }}
-      }, 1000); // Adjust the interval as needed
-
-        // Check accessToken expiration periodically
-        setInterval(() => {
-          if(!this.accessTokenExpired){
-          console.log("second")
-          this.checkAccessTokenExpiration();
-          if(this.accessTokenExpired && !this.refreshTokenExpired){
-            this.refreshToken();
-          }}
-        }, 1000); // Adjust the interval as needed
+      }, 120000); // Adjust the interval as needed
    
   }
 
@@ -195,6 +195,8 @@ export class HomeComponent {
           duration: 3000,
           panelClass: 'custom-snackbar',
           });
+          this.refreshTokenExpired=true;
+          this.accessTokenExpired=true;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -204,7 +206,7 @@ export class HomeComponent {
   }
   public onDelete(){
     this.deleteCurrentUser();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   public updatecurrentUser(userinfo: userInfo): void {

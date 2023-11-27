@@ -23,4 +23,7 @@ export class UserService {
   changeUserPassword(headers:HttpHeaders,email:String,changePasswordForm:changePasswordForm){
     return this.http.put<any>(`${this.apiServerUrl}/api/change-password/user/${email}`,changePasswordForm, { headers});
   }
+  checkEnable(email: string) {
+    return this.http.get<any>(`${this.apiServerUrl}/api/check/${email}`);
+  }
 }
