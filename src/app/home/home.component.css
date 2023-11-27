@@ -1,6 +1,8 @@
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 .password-input {
   position: relative;
+
+
 }
 
 .password-input input[type="password"] {
