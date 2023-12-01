@@ -55,7 +55,7 @@ export class SignupComponent {
   waitingForConfirmation=false;
   clicked=false;
   error:string='';
-  onclick(email:string,phone:string){
+  onclick(){
     this.clicked=true;
     this.request = {
       firstname: this.firstname,
@@ -69,7 +69,7 @@ export class SignupComponent {
         { id: 2 , name: "ROLE_USER" },
       ]
       
-    };
+    }; 
     console.log(this.request);
 
     if (!this.firstname || !this.lastname || !this.password || !this.gender
@@ -93,6 +93,7 @@ export class SignupComponent {
       this.userinfoService.register(this.request).subscribe(
       (response) => {
         if(response.msg_displayed==='failed to sign up'){
+          this.error = "* Email or phone already in use *";
           this.loading=false;
           this._snackBar.open("Registration failed. Please verify the provided information and try again.", '', {
             duration: 3000,
@@ -149,7 +150,7 @@ public checkEnable(): void {
             panelClass: 'custom-snackbar',
           });    
         }else{
-          this.onclick(this.email,this.password);
+          this.onclick();
         }
       },
       (error: HttpErrorResponse) => {

@@ -80,7 +80,7 @@
                 </div>
                 
                 <div class="d-flex justify-content-end pt-3">
-                  <button type="button"  class="btn btn-warning btn-lg ms-2 submit" (click)="onclick(email,phone)"  style="width: 30%;height: 60px;background-color:#1CA49A; color: white;margin-right: 160px;margin-top: 5px; " >Submit</button>
+                  <button type="button"  class="btn btn-warning btn-lg ms-2 submit" (click)="onclick()"  style="width: 30%;height: 60px;background-color:#1CA49A; color: white;margin-right: 160px;margin-top: 5px; " >Submit</button>
                 </div>
               </div>
             </div>
@@ -100,8 +100,8 @@
 
 
 <!-- Add a wrapper div around your content -->
-<div class="sky-blue-background">
-  <div class="container mt-5" *ngIf="waitingForConfirmation">
+<div class="sky-blue-background" *ngIf="waitingForConfirmation">
+  <div class="container mt-5" >
     <div class="card mx-auto confirmation" style="max-width: 600px;">
       <div class="card-body confirmation">
         <h5 class="card-title"><b>Email Confirmation</b></h5>

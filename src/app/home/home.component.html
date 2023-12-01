@@ -60,9 +60,9 @@
                  <img src="../../assets/images/comwork.png" width="130%" height="50vw" style="margin-left: -20%;">
                 </div> -->
                 <div class="d-flex d-sm-none align-items-center"> <!-- This div will be shown on extra small screens only -->
-                  <i class="bi bi-calendar-plus" style="color: rgb(71, 150, 241); font-size: 24px;" (click)="onOpenModal('dayoff')"></i>
+                  <i class="bi bi-calendar-plus" style="color: rgb(71, 150, 241); font-size: 24px;" (click)="onOpenModal('expense')"></i>
                 </div>
-                <div class="d-none d-sm-flex align-items-center addEXPENSE"  style="cursor: pointer; color: rgb(0, 37, 244); " (click)="onOpenModal('dayoff')" > 
+                <div class="d-none d-sm-flex align-items-center addEXPENSE"  style="cursor: pointer; color: rgb(0, 37, 244); " (click)="onOpenModal('expense')" > 
                   <i class="bi bi-calendar2-plus"></i>
                   <span class="ms-1" style="font-family: 'Arial', sans-serif;" >Add your expenses</span>
                 </div>
@@ -84,17 +84,67 @@
               </div>
             </div>
           </div>
-        </div>  
+        </div> 
+        <hr class="hr " />
+        <h3 style="margin-left: 1%; color: rgb(80, 44, 0);">Recent expenses</h3>
+        <!-- Loop through each leave in the 'leaves' array -->
+        <ng-container *ngFor="let expense of expenses" style="margin-top: 2%;">
+          <!-- Card -->
+          <div class="card mt-4 " style="width: auto; border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); ">
+            <div class="card-body">
+              <h5 class="card-title" style="font-family: Verdana, sans-serif;">Expense informations</h5>
+              <div class="row">
+                <div class="col">
+                  <p class="mb-1">Category:</p>
+                  <p class="mb-1">Sub-catgory:</p>
+                  <p class="mb-1">Amount:</p>
+                </div>
+                <div class="col" style="margin-right: -20px;">
+                  <p class="mb-1">{{ expense.category}}</p>
+                  <p class="mb-1">{{ expense.subcategory }}</p>
+                  <p class="mb-1">{{ expense.amount}} dt</p>
+                </div>
+                <div class="col d-none d-sm-block">
+                  <!-- Hide 'vr' in small screens (hidden on screens smaller than "sm") -->
+                  <div class="vr" style="height: 150px; width: 1px; background-color: #000;"></div>
+                </div>
+                <hr class="d-block d-sm-none" style="margin: 0; margin-top: 10px; margin-bottom: 10px;">
+                <div class="col">
+                  <p class="mb-1">Adding date:</p>
+                </div>
+                <div class="col" style="margin-right: -20px;">
+                  <p class="mb-1">{{ expense.addingdate | date: 'mediumDate' }}</p>
+                </div>
+                <!-- Show the horizontal line on screens smaller than "sm" (i.e., in small screens) -->
+                <!-- Status and Reason of Rejection (Right-aligned) -->
+                <div class="col text-right " >
+                  <span  class="trash-icon" style="position: absolute; right: 15px; bottom: 15px;"
+                  (click)="deleteExpense(expense.id)" title="Delete the expense">
+                    <i class="bi bi-trash3-fill" style="color: red;"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        
+
+        <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="expenses && expenses.length === 0" style="margin-top: 2%;">
+          <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">no expenses !</h4>
+            <p>no expenses added yet .</p>
+          </div>
+        </div> 
       </div>
   </div>
 </div> 
 <!-- personal informations modal -->
-<div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true" *ngIf="user">
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true" *ngIf="user">
   <!-- Modal content goes here -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateEmployeeModalLabel">Personal information</h5>
+        <h5 class="modal-title" id="updateUserModalLabel">Personal information</h5>
         <button id="close-update" type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="isEditMode = false">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -149,7 +199,7 @@
 </div>
 
 <!-- Delete Modal -->
-<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
         <div class="modal-header">
@@ -169,7 +219,7 @@
   </div>
 </div>
 <!-- Logout Modal -->
-<div class="modal fade" id="logoutEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+<div class="modal fade" id="logoutUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
         <div class="modal-header">
@@ -243,3 +293,96 @@
     </div>
   </div>
 <!--fin-->
+  <!-- Expense Modal -->
+  <div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateEmployeeModalLabel">Add your expense</h5>
+             <button id="close-expense" type="button" class="close" data-dismiss="modal" aria-label="Close" 
+             (click)="resetExpense()">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm">
+                <div class="form-group">
+                   <label for="addingDate">Expense date</label>
+                   <input type="date"  name="addingDate" class="form-control" id="addingDate"  [(ngModel)]="addingDate">
+                </div>
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+                  <div class="input-group">
+                    <input type="number" name="amount" class="form-control" id="amount" [(ngModel)]="amount">
+                    <div class="input-group-append">
+                      <span class="input-group-text">dt</span>
+                    </div>
+                  </div>
+                </div>                
+                <div class="form-group">
+                  <label for="category">Category</label>
+                  <div *ngIf="category !== 'personalized'; else personalizedCategories">
+                    <div class="input-group">
+                      <select name="category" id="category" class="form-control" [(ngModel)]="category" (change)="onCategoryChange()">
+                        <option *ngFor="let cat of categories" [value]="cat">{{ expenseData[cat].name }}</option>
+                        <!-- Option for personalized category -->
+                        <option value="personalized">Personalized Category</option>
+                      </select>
+                      <!-- Trash icon for deleting personalized category -->
+                      <span class="input-group-append"*ngIf="isCategoryInPersonalized(category)" title="Delete the category">
+                        <button class="btn btn-outline-secondary" type="button" (click)="deleteCategory()">
+                          <i class="bi bi-trash3-fill" style="color: red;"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <!-- Input for personalized category -->
+                  <ng-template #personalizedCategories>
+                    <div class="input-group">
+                      <input type="text" name="personalizedCategory" id="personalizedCategory" class="form-control" [(ngModel)]="personalizedCategory" placeholder="Personalized Category">
+                      <!-- Trash icon for deleting personalized category -->
+                    </div>
+                  </ng-template>
+                </div>
+                
+                
+                <div class="form-group">
+                  <label for="subCategory">Sub-category</label>
+                  <div *ngIf="!(subCategory === 'personalized' || category === 'personalized'); else personalizedSubcategories">
+                    <div class="input-group">
+                    <select name="subCategory" id="subCategory" class="form-control" [(ngModel)]="subCategory">
+                      <option *ngFor="let subCat of expenseData[category]?.subcategories" [value]="subCat">{{ subCat }}</option>
+                      <option value="personalized">Personalized Category</option>
+                    </select>
+                      <!-- Trash icon for deleting personalized category -->
+                      <span class="input-group-append" *ngIf="isSubCategoryInPersonalized(subCategory)" title="Delete the sub-category">
+                        <button class="btn btn-outline-secondary" type="button" (click)="deleteSubCategory()">
+                          <i class="bi bi-trash3-fill" style="color: red;"></i>
+                        </button>
+                      </span>
+                      </div>
+                  </div>
+                  <!-- Input for personalized subcategory -->
+                  <ng-template #personalizedSubcategories>
+                    <div class="input-group">
+                      <input type="text" name="personalizedSubCategory" id="personalizedSubCategory" class="form-control" [(ngModel)]="personalizedSubCategory" placeholder="personalized SubCategory">
+                    </div>     
+                   </ng-template>
+                </div>
+                <div class="form-group">
+                  <div class="d-flex justify-content-center pt-3" >
+                    <h6  style="color: red;" *ngIf="error">{{error}}</h6>
+                  </div>
+                </div>
+                
+                
+                <div class="modal-footer">
+                   <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                   <button class="btn btn-primary" (click)="onAddExpense()">Soumettre</button>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
