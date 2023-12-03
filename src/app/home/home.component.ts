@@ -13,6 +13,11 @@ import { Expense } from 'src/app/Expense';
 import { CategoriesService } from '../categories.service';
 import { CategoriesResponse } from '../CategoriesResponse';
 import { cloneDeep } from 'lodash';
+import { CategoryAndAmount } from '../CategoryAndAmount';
+import { SubCatOfHighestCat } from '../subCatOfhighestCat';
+
+
+
 
 
 interface ExpenseCategory {
@@ -22,6 +27,23 @@ interface ExpenseCategory {
 
 interface ExpenseData {
   [key: string]: ExpenseCategory;
+}
+interface ChartDataPoint {
+  label: string;
+  y: number;
+}
+
+interface ChartOptions {
+  animationEnabled: boolean;
+  theme: string,
+  axisY: {
+    includeZero: boolean;
+  };
+  data: {
+    type: string;
+    indexLabelFontColor: string;
+    dataPoints: ChartDataPoint[];
+  }[];
 }
 
 
@@ -230,13 +252,14 @@ export class HomeComponent {
     this.refreshtoken = this.tokenService.getRefreshtoken();
     console.log("access token: "+this.accesstoken);
     console.log("refresh token: "+this.refreshtoken);
+    this.getHighestCategories();
     console.log('lena');
-
-    console.log(this.originExpenseData);
+    console.log(this.highestCategories);
 
     this.findCurrentUser();    
     this.getCurrentUserLastExpenses();
     this.getSubcategories();
+    this.getCategories();
 
       
     // Check accessToken expiration periodically
@@ -518,7 +541,12 @@ public getSubcategories(): void {
                 });
     
               this.resetExpense();  
-              this.getCurrentUserLastExpenses()
+              this.getCurrentUserLastExpenses();
+              this.getHighestCategories();
+              this.getCategories();
+              window.location.reload();
+
+
     
             },
             (error: HttpErrorResponse) => {
@@ -732,6 +760,9 @@ public getSubcategories(): void {
                 duration: 3000,
                 panelClass: 'custom-snackbar',
                 });
+              this.getCategories();
+              window.location.reload();
+
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -739,6 +770,140 @@ public getSubcategories(): void {
             }
           );
  }
+ highestCategories!:CategoryAndAmount[];
+ public getHighestCategories(): void {
+   // Set the authorization header with the access token
+   const headers = new HttpHeaders({
+     Authorization: `Bearer ${this.accesstoken}`,
+   });
+   
+ 
+   this.expenseService.getHighestCategories(headers)
+     .subscribe(
+       (response: CategoryAndAmount[]) => {
+         console.log('highest categories extracted successfully');
+         console.log(response);
+
+         this.highestCategories=response;
+         console.log(this.highestCategories);
+         this.onExtractSubCat();
+
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+         console.log('failed to extract the expenses');
+       }
+       
+     
+       );
+     }
+     categoriesUsed!:CategoryAndAmount[];
+     public getCategories(): void {
+       // Set the authorization header with the access token
+       const headers = new HttpHeaders({
+         Authorization: `Bearer ${this.accesstoken}`,
+       });
+       
+     
+       this.expenseService.getCategories(headers)
+         .subscribe(
+           (response: CategoryAndAmount[]) => {
+             console.log('categories used extracted successfully');
+             console.log(response);
+    
+             this.categoriesUsed=response;
+             console.log(this.categoriesUsed);
+             this.updateChartOptions();
+    
+           },
+           (error: HttpErrorResponse) => {
+             alert(error.message);
+             console.log('failed to extract the expenses');
+           }
+           
+         
+           );
+         }
+     subCatOfHighestCat: { [category: string]: SubCatOfHighestCat[] } = {};
+     public getSubCatOfHighestCat(category:string): void {
+       // Set the authorization header with the access token
+       const headers = new HttpHeaders({
+         Authorization: `Bearer ${this.accesstoken}`,
+       });
+       
+     
+       this.expenseService.getSubCatOfHighestCat(category,headers)
+         .subscribe(
+           (response: SubCatOfHighestCat) => {
+            if (!this.subCatOfHighestCat[category]) {
+              this.subCatOfHighestCat[category] = [];
+            }
+    
+             this.subCatOfHighestCat[category].push(response);
+           },
+           (error: HttpErrorResponse) => {
+             alert(error.message);
+             console.log('failed to extract the sub categories');
+           }
+         
+           );
+         }
+     public onExtractSubCat(){
+      this.highestCategories.forEach((highestCategory: CategoryAndAmount) => {
+        this.getSubCatOfHighestCat(highestCategory.category);
+      });
+     };
+        
+    chartOptions: ChartOptions = {
+      animationEnabled: false,
+     theme: "light2",
+
+      axisY: {
+        includeZero: true
+      },
+      data: [{
+        type: "pie",
+        indexLabelFontColor: "#5A5757",
+        dataPoints: []
+      }]
+    };
+    chartOptions2: ChartOptions = {
+
+      animationEnabled: false,
+      theme: "light2",
+
+      axisY: {
+      includeZero: true
+      },
+      data: [{
+      type: "column", //change type to bar, line, area, pie, etc
+      //indexLabel: "{y}", //Shows y value on all Data Points
+      indexLabelFontColor: "#5A5757",
+      dataPoints: []
+      }]
+    }
+    fixed=false;
+  
+    updateChartOptions(): void {
+  // Assuming highestCategories is an array with objects having 'category' and 'totalAmount' properties
+  this.chartOptions.data[0].dataPoints = this.categoriesUsed.map((category) => ({
+    label:category.category,
+    y: category.totalAmount,
+
+  }));
+  // Assuming highestCategories is an array with objects having 'category' and 'totalAmount' properties
+  this.chartOptions2.data[0].dataPoints = this.categoriesUsed.map((category) => ({
+    label: category.category,
+    y: category.totalAmount,
+
+  }));
+
+  this.fixed=true;
+     // console.log(this.chartOptions.data);
+      console.log(this.chartOptions2.data);
+
+    }
+
+  }
       
 
-}

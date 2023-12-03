@@ -11,6 +11,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ExpensesComponent } from './expenses/expenses.component';
+
 
 
 
@@ -24,6 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LoginComponent,
     SignupComponent,
     HomeComponent,
+    ExpensesComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSnackBarModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CanvasJSAngularChartsModule
     
   ],
   providers: [],
