@@ -9,7 +9,6 @@ import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { changePasswordForm } from '../changePasswordForm';
 import { ExpenseService } from '../expense.service';
-//import {MatSort, MatTableDataSource} from '@angular/material';
 
 
 
@@ -22,6 +21,7 @@ import { ExpenseService } from '../expense.service';
 export class ExpensesComponent {
   
   public onOpenModal( mode: string): void {
+
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
