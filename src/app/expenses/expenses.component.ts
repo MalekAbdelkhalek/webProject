@@ -9,12 +9,8 @@ import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { changePasswordForm } from '../changePasswordForm';
 import { ExpenseService } from '../expense.service';
-import { Expense } from 'src/app/Expense';
-import { CategoriesService } from '../categories.service';
-import { CategoriesResponse } from '../CategoriesResponse';
-import { cloneDeep } from 'lodash';
-import { CategoryAndAmount } from '../CategoryAndAmount';
-import { SubCatOfHighestCat } from '../subCatOfhighestCat';
+//import {MatSort, MatTableDataSource} from '@angular/material';
+
 
 
 @Component({
