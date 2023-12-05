@@ -12,9 +12,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { ExpensesComponent } from './expenses/expenses.component';
-
-
+import {MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { ContactComponent } from './contact/contact.component';
+import { VisualisationComponent } from './visualisation/visualisation.component';
 
 
 
@@ -26,8 +30,11 @@ import { ExpensesComponent } from './expenses/expenses.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent,
-    ExpensesComponent,
+    HomeComponent, 
+    ContactComponent,
+    VisualisationComponent
+    
+
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,11 @@ import { ExpensesComponent } from './expenses/expenses.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatToolbarModule,MatIconModule
     
   ],
   providers: [],

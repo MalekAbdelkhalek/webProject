@@ -1,4 +1,4 @@
-<div class="container-fluid" [hidden]="refreshTokenExpired">
+<div class="container-fluid" *ngIf="!refreshTokenExpired">
     <div class="row flex-nowrap">
       <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex flex-column position-relative">
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
@@ -51,62 +51,63 @@
               <!-- Content Area -->
               <div class="col py-3">
                 <!-- Home Icon and Text -->
-                <div class="d-flex align-items-center justify-content-between" style="margin-top: 0%;">
+                <div class="d-flex align-items-center justify-content-between" style="margin-top: 2%;">
                   <div>
-                    <i class="fs-4 bi bi-currency-exchange" style="color: rgb(71, 150, 241);"></i>
-                    <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241); font-family: 'Arial', sans-serif;">Expenses</span>
-                  </div>  
-                  <div class="d-flex align-items-center justify-content-center" style="font-size: 200%; font-weight: bold; margin-top: 20px;">
-                    HISTORICAL
-                  </div>   
-                  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="margin-top: 20px; margin-right: 7%;">
-                    <mat-button-toggle style="margin-right: 2%; width: 100px;" (click)="onOpenModal('filter')" >Filter</mat-button-toggle>
-                    <mat-button-toggle style="width: 100px;" (click)="ResetExpenses()">Reset</mat-button-toggle>
-                  </mat-button-toggle-group>
+                    <i class="fs-4 bi bi-person-rolodex" style="color: rgb(71, 150, 241);"></i>
+                    <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241); font-family: 'Arial', sans-serif;">Contact</span>
+                  </div>          
                 </div>
+                
+
               </div>
             </div>
-          </div> 
-          <div [hidden]="expenses && expenses.length === 0">
-
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="margin-top: 60px;" > 
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="category">
-                  <th mat-header-cell *matHeaderCellDef> Categroy </th>
-                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-                </ng-container>
+          </div>  
+          <section class="border p-4 d-flex justify-content-center mb-4 triangle-container" style="background-color: rgb(145, 222, 253); ">
+            <form id="form" class="text-center" style="width: 100%; max-width: 100%">
+              <h2>Contact us</h2>
+          
+              <!-- Name input -->
+              <div class="mb-4">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="form-control" />
+              </div>
               
-                <!-- Name Column -->
-                <ng-container matColumnDef="subcategory">
-                  <th mat-header-cell *matHeaderCellDef > Sub-category </th>
-                  <td mat-cell *matCellDef="let element"> {{element.subcategory}} </td>
-                </ng-container>
-              
-                <!-- Weight Column -->
-                <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
-                  <td mat-cell *matCellDef="let element"> {{element.amount}} DT</td>
-                </ng-container>
-              
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="addingdate">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Adding date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.addingdate| date: 'mediumDate'}} </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-          </div>
-          <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="expenses && expenses.length === 0" style="margin-top: 2%;">
-            <div class="alert alert-info" role="alert">
-              <h4 class="alert-heading">no expenses !</h4>
-              <p>no expenses added yet .</p>
-            </div>
-          </div> <br>
-
+              <!-- Email input -->
+              <div class="mb-4">
+                <label for="email">Email address</label>
+                <input type="text" id="email" class="form-control" />
+              </div>
+          
+              <!-- Subject input -->
+              <div class="mb-4">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" class="form-control" />
+              </div>
+          
+              <!-- Message input -->
+              <div class="mb-4">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" rows="4"></textarea>
+              </div>
+          
+              <!-- Mail copy -->
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="copy"
+                />
+                <label class="form-check-label" for="copy">
+                  Send me copy
+                </label>
+              </div>
+          
+              <!-- Submit button -->
+              <button type="button" class="btn btn-primary my-4">Send</button>
+            </form>
+          </section>
+          
           
         </div>
     </div>
@@ -267,63 +268,4 @@
       </div>
     </div>
   <!--fin-->
-  <!--filter mode-->
-  <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalsLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-       <div class="modal-content">
-          <div class="modal-header">
-             <h5 class="modal-title" id="updateEmployeeModalLabel" style="font-size: large;">Filter by:</h5>
-             <button id="close-filter" type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetFilter()">
-             <span aria-hidden="true">&times;</span>
-             </button>
-          </div>
-          <div class="modal-body">   
-            <form #editForm="ngForm">   
-              
-              <div class="form-group">
-                <label for="month">Month</label>
-                <div >
-                  <div class="input-group">
-                  <select name="month" id="month" class="form-control" [(ngModel)]="month">
-                    <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-                    <option value=""style="color: red;">No month</option>
-                  </select>
-                    </div>
-                </div>
-              </div>
-
-                <div class="form-group">
-                  <label for="category">Category</label>
-                  <div >
-                    <div class="input-group">
-                      <select name="category" id="category" class="form-control" [(ngModel)]="category" >
-                        <option *ngFor="let cat of categories" [value]="cat">{{ expenseData[cat].name }}</option>
-                        <option value="" style="color: red;">No category</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              
-                
-                <div class="form-group">
-                  <label for="subCategory">Sub-category</label>
-                  <div >
-                    <div class="input-group">
-                    <select name="subCategory" id="subCategory" class="form-control" [(ngModel)]="subCategory">
-                      <option *ngFor="let subCat of expenseData[category]?.subcategories" [value]="subCat">{{ subCat }}</option>
-                      <option value="" style="color: red;">No sub-category</option>
-                    </select>
-                      </div>
-                  </div>
-                </div>
-                
-                
-                <div class="modal-footer">
-                   <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
-                   <button class="btn btn-primary" (click)="filterExpenses()">Soumettre</button>
-                </div>
-             </form>
-          </div>
-       </div>
-    </div>
-  </div>
+  

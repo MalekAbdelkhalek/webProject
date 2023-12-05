@@ -20,8 +20,11 @@ export class ExpenseService {
   public deleteExpense(id: string,headers:HttpHeaders): Observable<number>{
     return this.http.delete<number>(`${this.apiServerUrl}/api/delete/expense/${id}`, { headers });
   }
-  public getCurrentUserLastExpenses(headers:HttpHeaders): Observable<Expense[]>{
+  public getLastExpenses(headers:HttpHeaders): Observable<Expense[]>{
     return this.http.get<Expense[]>(`${this.apiServerUrl}/api/get/lastExpenses`, { headers });
+  }
+  public getAllExpenses(headers:HttpHeaders): Observable<Expense[]>{
+    return this.http.get<Expense[]>(`${this.apiServerUrl}/api/get/allExpenses`, { headers });
   }
   public getHighestCategories(headers:HttpHeaders): Observable<CategoryAndAmount[]>{
     return this.http.get<CategoryAndAmount[]>(`${this.apiServerUrl}/api/get/mostCategories`, { headers });

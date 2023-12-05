@@ -47,6 +47,7 @@ interface ChartOptions {
 }
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -55,79 +56,79 @@ interface ChartOptions {
 
 export class HomeComponent {
   originExpenseData: ExpenseData = {
-    housing: {
+    Housing: {
       name: 'Housing',
       subcategories: ['Rent/Mortgage', 'Utilities', 'Home Insurance', 'Property Taxes', 'Maintenance/Repairs'],
     },
-    transportation: {
+    Transportation: {
       name: 'Transportation',
       subcategories: ['Fuel/Gas', 'Public Transportation', 'Car Insurance', 'Maintenance/Repairs', 'Parking Fees'],
     },
-    food: {
+    Food: {
       name: 'Food',
       subcategories: ['Groceries', 'Dining Out', 'Takeout/Delivery'],
     },
-    health: {
+    Health: {
       name: 'Health',
       subcategories: ['Health Insurance', 'Medical Bills', 'Prescriptions', 'Gym Memberships'],
     },
-    entertainment: {
+    Entertainment: {
       name: 'Entertainment',
       subcategories: ['Movies', 'Concerts', 'Subscriptions', 'Hobbies/Activities'],
     },
-    personalCare: {
+    PersonalCare: {
       name: 'Personal Care',
       subcategories: ['Haircuts', 'Beauty Products', 'Spa/Massage'],
     },
-    education: {
+    Education: {
       name: 'Education',
       subcategories: ['Tuition', 'Books/Supplies', 'Courses/Workshops'],
     },
-    debts: {
+    Debts: {
       name: 'Debts',
       subcategories: ['Credit Card Payments', 'Loans', 'Other Debts'],
     },
-    savings: {
+    Savings: {
       name: 'Savings',
       subcategories: ['Emergency Fund', 'Retirement Savings', 'Investments'],
     },
-    giftsDonations: {
+    'Gifts/Donations': {
       name: 'Gifts/Donations',
       subcategories: ['Birthday Gifts', 'Charity Donations', 'Holiday Gifts'],
     },
-    insurance: {
+    Insurance: {
       name: 'Insurance',
       subcategories: ['Life Insurance', 'Car Insurance', 'Home Insurance'],
     },
-    taxes: {
+    Taxes: {
       name: 'Taxes',
       subcategories: ['Income Taxes', 'Property Taxes', 'Sales Taxes'],
     },
-    travel: {
+    Travel: {
       name: 'Travel',
       subcategories: ['Flights', 'Hotels', 'Rental Cars'],
     },
-    clothing: {
+    Clothing: {
       name: 'Clothing',
       subcategories: ['Apparel', 'Shoes', 'Accessories'],
     },
-    technology: {
+    Technology: {
       name: 'Technology',
       subcategories: ['Electronics', 'Software', 'Gadgets/Accessories'],
     },
-    pets: {
+    Pets: {
       name: 'Pets',
       subcategories: ['Pet Food', 'Veterinary Care', 'Supplies'],
     },
-    kids: {
+    Kids: {
       name: 'Kids',
       subcategories: ['Childcare', 'Toys', 'School Expenses'],
     },
   } as ExpenseData;
   expenseData: ExpenseData = { ...this.originExpenseData };
   categories: string[] = Object.keys(this.expenseData);
-  category: string = 'food';
-  subCategory: string = this.expenseData["food"]?.subcategories[0];
+  category: string = 'Food';
+  subCategory: string = this.expenseData["Food"]?.subcategories[0];
 
   onCategoryChange() {
     // Reset subCategory when the category changes
@@ -176,9 +177,10 @@ export class HomeComponent {
   refreshtoken:any;
   constructor(private userinfoService:UserInfoService,private userService:UserService,private expenseService: ExpenseService,private categoryService: CategoriesService,
   private tokenService: TokensService,private http: HttpClient,private router: Router,private _snackBar: MatSnackBar ) {
-    
   }
   public onOpenSessionExpired(): void {
+    const button1 = document.getElementById('close-expense');
+    button1?.click();
     const container = document.getElementById('session-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -257,7 +259,7 @@ export class HomeComponent {
     console.log(this.highestCategories);
 
     this.findCurrentUser();    
-    this.getCurrentUserLastExpenses();
+    this.getLastExpenses();
     this.getSubcategories();
     this.getCategories();
 
@@ -307,14 +309,13 @@ export class HomeComponent {
 personalizedCategories: string[] = [];
 personalizedSubcategories: string[] = [];
 isCategoryInPersonalized(cat: string): boolean {
-  const lowerCaseCat = cat.toLowerCase();
-  return this.personalizedCategories.some(pc => pc.toLowerCase() === lowerCaseCat);
+  return !!cat && this.personalizedCategories.includes(cat);
 }
 
 isSubCategoryInPersonalized(subCat: string): boolean {
-  const lowerCaseSubCat = subCat.toLowerCase();
-  return this.personalizedSubcategories.some(psc => psc.toLowerCase() === lowerCaseSubCat);
+  return !!subCat && this.personalizedCategories.includes(subCat);
 }
+
 
       
 public getSubcategories(): void {
@@ -332,15 +333,15 @@ public getSubcategories(): void {
           // Create a deep copy of originExpenseData
           this.expenseData = cloneDeep(this.originExpenseData);
         for (const item of response) {
-          const lowerCaseCategory = item.category.toLowerCase();
+          const Category = item.category;
 
-          if (!this.expenseData[lowerCaseCategory]) {
-            this.expenseData[lowerCaseCategory] = { name: item.category, subcategories: item.subcategories };
+          if (!this.expenseData[Category]) {
+            this.expenseData[Category] = { name: item.category, subcategories: item.subcategories };
             this.personalizedCategories.push(item.category);
             this.personalizedSubcategories.push(...item.subcategories);
           } else {
-            this.expenseData[lowerCaseCategory].subcategories = [
-              ...this.expenseData[lowerCaseCategory].subcategories,
+            this.expenseData[Category].subcategories = [
+              ...this.expenseData[Category].subcategories,
               ...item.subcategories
             ];
             this.personalizedSubcategories.push(...item.subcategories);
@@ -541,7 +542,7 @@ public getSubcategories(): void {
                 });
     
               this.resetExpense();  
-              this.getCurrentUserLastExpenses();
+              this.getLastExpenses();
               this.getHighestCategories();
               this.getCategories();
               window.location.reload();
@@ -556,8 +557,7 @@ public getSubcategories(): void {
           );
   }
   public onAddExpense(){
-    console.log(this.category);
-    console.log(this.isCategoryInPersonalized(this.category));
+    console.log(this.category);;
     if(!this.addingDate || !this.amount){
       this.error="* Please would you fill all the fields *";
     }else{
@@ -658,18 +658,21 @@ public getSubcategories(): void {
       );
   }
   expenses!:Expense[];
-  public getCurrentUserLastExpenses(): void {
+  public getLastExpenses(): void {
     // Set the authorization header with the access token
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.accesstoken}`,
     });
     
   
-    this.expenseService.getCurrentUserLastExpenses(headers)
+    this.expenseService.getLastExpenses(headers)
       .subscribe(
         (response: Expense[]) => {
           console.log('expenses extracted successfully');
-          this.expenses=response;
+          this.expenses = response.map(expense => ({
+            ...expense,
+            addingdate: new Date(expense.addingdate),
+          }));
           console.log(this.expenses);
         },
         (error: HttpErrorResponse) => {
@@ -755,7 +758,7 @@ public getSubcategories(): void {
             (response: number) => {
               console.log('expense deleted successfully.');
               // Refresh the list of leaves after successful deletion (optional)
-              this.getCurrentUserLastExpenses();
+              this.getLastExpenses();
               this._snackBar.open("Your expense has been successfully deleted.", '', {
                 duration: 3000,
                 panelClass: 'custom-snackbar',
@@ -903,6 +906,7 @@ public getSubcategories(): void {
       console.log(this.chartOptions2.data);
 
     }
+    
 
   }
       

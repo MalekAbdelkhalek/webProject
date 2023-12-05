@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { userInfo } from '../userInfo';
 import { UserInfoService } from '../user-info.service';
 import { TokensService } from '../tokens.service';
@@ -9,150 +9,17 @@ import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { changePasswordForm } from '../changePasswordForm';
 import { ExpenseService } from '../expense.service';
-import { Expense } from 'src/app/Expense';
 import { CategoriesService } from '../categories.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'; // Import MatTableModule
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { FormsModule } from '@angular/forms';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-interface ExpenseCategory {
-  name: string;
-  subcategories: string[];
-}
-interface ExpenseData {
-  [key: string]: ExpenseCategory;
-}
+
 
 @Component({
-  selector: 'app-expenses',
-  standalone: true,
-  imports: [MatTableModule,CommonModule,MatPaginatorModule,MatSortModule,FormsModule,MatButtonToggleModule],
-  templateUrl: './expenses.component.html',
-  styleUrls: ['./expenses.component.css']
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
 })
 
-export class ExpensesComponent {
-  expenseData: ExpenseData = {};
-  categories: string[] = [];
-  category: string = '';
-  subCategory: string = '';
-  month:string='';
-
-  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  expensesToShow!: Expense[];
-
-  expenses!: Expense[];
-
-  public getAllExpenses(): void {
-    // Set the authorization header with the access token
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.accesstoken}`,
-    });
-
-    this.expenseService.getAllExpenses(headers)
-      .subscribe(
-        (response: Expense[]) => {
-          console.log('Expenses extracted successfully');
-          this.expenses = response.map(expense => ({
-            ...expense,
-            addingdate: new Date(expense.addingdate),
-          }));
-          // Organize expenses into expenseData based on category and subcategories
-          this.expenses.forEach(expense => {
-            if (!this.expenseData[expense.category]) {
-              // If category doesn't exist, create it
-              this.expenseData[expense.category] = {
-                name: expense.category,
-                subcategories: [expense.subcategory]
-              };
-            } else {
-              // If category exists, add subcategory if it doesn't exist
-              if (!this.expenseData[expense.category].subcategories.includes(expense.subcategory)) {
-                this.expenseData[expense.category].subcategories.push(expense.subcategory);
-              }
-            }
-          });
-
-          // Update categories based on expenseData
-          this.categories = Object.keys(this.expenseData);
-
-          // Set default category and subcategory
-          this.category =  '';
-          this.subCategory = '';
-
-          // Update dataSource with expenses
-          this.dataSource.data = this.expenses;
-
-          console.log('Categories:', this.categories);
-          console.log('Expense Data:', this.expenseData);
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-          console.log('Failed to extract the expenses');
-        }
-      );
-
-    }
-    public resetFilter(): void {
-      this.category = '';
-      this.subCategory = '';
-      this.month='';
-  }
-    /*onCategoryChange() {
-      // Reset subCategory when the category changes
-      this.subCategory = this.expenseData[this.category]?.subcategories[0] || '';
-    }*/
-      // Filter and update expensesToShow
-      filterExpenses(): void {
-        // Copy the original expenses array
-        this.expensesToShow = [...this.expenses];
-      
-        // Filter by month
-        if (this.month) {
-          this.expensesToShow = this.expensesToShow.filter(expense =>
-            expense.addingdate.getMonth() === this.months.indexOf(this.month)
-          );
-        }
-      
-        // Filter by category
-        if (this.category) {
-          this.expensesToShow = this.expensesToShow.filter(expense =>
-            expense.category.toLowerCase() === this.category.toLowerCase()
-          );
-        }
-      
-        // Filter by subcategory
-        if (this.subCategory) {
-          this.expensesToShow = this.expensesToShow.filter(expense =>
-            expense.subcategory.toLowerCase() === this.subCategory.toLowerCase()
-          );
-        }
-        this.dataSource.data = this.expensesToShow;
-        const button = document.getElementById('close-filter');
-        button?.click();
-        console.log('expensesToShow:', this.expensesToShow);
-      }
-      ResetExpenses(): void {
-        this.dataSource.data=this.expenses;
-      }
-  // Utility function to extract the month from a Date object
-  getMonthFromDate(n:number): string {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return monthNames[n];
-  }
-
-
-  displayedColumns: string[] = ['category', 'subcategory', 'amount', 'addingdate'];
-  sortedData: Expense[] = [];
-  dataSource = new MatTableDataSource<Expense>([]);
-  sortColumn: string | undefined;
-  sortDirection: 'asc' | 'desc' |'initial' = 'asc';
-
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+export class ContactComponent {
   
   public onOpenModal( mode: string): void {
     const container = document.getElementById('main-container');
@@ -160,8 +27,8 @@ export class ExpensesComponent {
     button.type = 'button';
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
-    if (mode === 'filter') {
-      button.setAttribute('data-target', '#filterModal');
+    if (mode === 'expense') {
+      button.setAttribute('data-target', '#expenseModal');
     }
     if (mode === 'update') {
       button.setAttribute('data-target', '#updateUserModal');
@@ -198,6 +65,8 @@ export class ExpensesComponent {
   private tokenService: TokensService,private http: HttpClient,private router: Router,private _snackBar: MatSnackBar ) {
   }
   public onOpenSessionExpired(): void {
+    const button1 = document.getElementById('close-expense');
+    button1?.click();
     const container = document.getElementById('session-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -267,16 +136,12 @@ export class ExpensesComponent {
 
  
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
-    console.log(this.dataSource)
     this.accesstoken = this.tokenService.getAccesstoken();
     this.refreshtoken = this.tokenService.getRefreshtoken();
     console.log("access token: "+this.accesstoken);
     console.log("refresh token: "+this.refreshtoken);
     this.findCurrentUser();    
-    this.getAllExpenses();
+ 
 
       
     // Check accessToken expiration periodically
@@ -302,7 +167,6 @@ export class ExpensesComponent {
       }, 1000); // Adjust the interval as needed
    
   }
-  
 
     public findCurrentUser(): void {
     // Set the authorization header with the access token
@@ -471,7 +335,6 @@ export class ExpensesComponent {
        );
    
    }    
-
 
 
   }

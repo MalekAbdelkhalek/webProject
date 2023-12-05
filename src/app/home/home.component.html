@@ -32,12 +32,12 @@
             </li>
             <li>
               <hr class="hr " />
-                <a class="nav-link px-0 align-middle">
+                <a href="/visualisation" class="nav-link px-0 align-middle">
                     <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Visualisation</span> </a>
             </li>
             <li>
               <hr class="hr " />
-              <a class="nav-link px-0 align-middle">
+              <a href="/contact"class="nav-link px-0 align-middle">
                   <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline">Contact</span> </a>
           </li>
         </ul>
@@ -128,7 +128,7 @@
           </div>
         </ng-container>
         
-
+ 
         <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="expenses && expenses.length === 0" style="margin-top: 2%;">
           <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">no expenses !</h4>
@@ -317,7 +317,7 @@
   </div>
 <!--fin-->
   <!-- Expense Modal -->
-  <div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+  <div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="expenseModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
        <div class="modal-content">
           <div class="modal-header">
