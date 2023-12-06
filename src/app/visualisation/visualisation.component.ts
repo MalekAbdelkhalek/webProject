@@ -12,7 +12,6 @@ import { ExpenseService } from '../expense.service';
 import { CategoriesService } from '../categories.service';
 
 
-
 @Component({
   selector: 'app-visualisation',
   templateUrl: './visualisation.component.html',

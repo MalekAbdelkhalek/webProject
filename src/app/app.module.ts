@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +32,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     HomeComponent, 
     ContactComponent,
     VisualisationComponent
-    
+
 
   ],
   imports: [
@@ -49,7 +48,7 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     MatSortModule,
     MatPaginatorModule,
     MatToolbarModule,MatIconModule
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

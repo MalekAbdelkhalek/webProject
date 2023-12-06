@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { VisualisationComponent } from './visualisation.component';
 
 describe('VisualisationComponent', () => {
