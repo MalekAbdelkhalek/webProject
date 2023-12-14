@@ -8,8 +8,8 @@ import {jwtDecode} from 'jwt-decode';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { changePasswordForm } from '../changePasswordForm';
-import { ExpenseService } from '../expense.service';
-import { CategoriesService } from '../categories.service';
+import { ContactService } from '../contact.service';
+import { Contact } from '../Contact';
 
 
 
@@ -21,7 +21,7 @@ import { CategoriesService } from '../categories.service';
 
 export class ContactComponent {
   
-  public onOpenModal( mode: string): void {
+  public onOpenModal(mode: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -61,8 +61,8 @@ export class ContactComponent {
   sharedData: any;
   accesstoken:any;
   refreshtoken:any;
-  constructor(private userinfoService:UserInfoService,private userService:UserService,private expenseService: ExpenseService,private categoryService: CategoriesService,
-  private tokenService: TokensService,private http: HttpClient,private router: Router,private _snackBar: MatSnackBar ) {
+  constructor(private userinfoService:UserInfoService,private userService:UserService, private tokenService: TokensService,
+    private router: Router,private _snackBar: MatSnackBar, private contactService: ContactService ) {
   }
   public onOpenSessionExpired(): void {
     const button1 = document.getElementById('close-expense');
@@ -252,11 +252,17 @@ export class ContactComponent {
     this.updatecurrentUser(this.userinfo);
 
   }
+  birthdateError=false;
+
   saveChanges(): void {
+    if(new Date(this.user.birthdate).getFullYear() > 2015){
+      this.birthdateError=true;
+
+    }else{
     this.onUpdate();
     this.isEditMode = false;
     const button = document.getElementById('close-update');
-    button?.click();
+    button?.click();}
   }
   
   cancelEdit(): void {
@@ -297,7 +303,11 @@ export class ContactComponent {
  currentPassword: string = '';
  newPassword: string = '';
  changePasswordForm!:changePasswordForm;
+ changePasswordError='';
  public changePassword(): void {
+  if(!this.currentPassword || !this.newPassword){
+    this.changePasswordError="Would you fill all the fields"
+  }else {
   // Set the authorization header with the access token
   const headers = new HttpHeaders({
   Authorization: `Bearer ${this.accesstoken}`,
@@ -324,7 +334,7 @@ export class ContactComponent {
       }else{
         console.log(response);
         console.log('Failed to change the password.');
-        this.incorrect=true;
+        this.changePasswordError="Incorrect password entered"
       }
       this.showCurrentPassword= false;  this.showNewPassword=false;this.currentPassword='';this.newPassword='';
     },
@@ -334,9 +344,72 @@ export class ContactComponent {
          }  
        );
    
-   }    
+   }  }  
+   contact!:Contact;   
+   name:string='';   
+   email:string='';   
+   subject:string='';   
+   message:string='';   
+   error='';
 
+  loading=false;
+
+   public sendMessage(): void {
+    if(!this.name || !this.email || !this.subject || !this.message){
+      this.error="* Every field should be filled *"
+    }else{
+      if(!this.isValidEmail(this.email)){
+        this.error="* please enter a valid email* "
+      }else{
+ // Set the authorization header with the access token
+ const headers = new HttpHeaders({
+  Authorization: `Bearer ${this.accesstoken}`,
+ });
+    this.contact={
+  name: this.name,
+  email:this.email,
+  subject:this.subject,
+  message:this.message,
+ }
+this.loading=true;
+ console.log('Contact :' + this.contact);
+
+
+ this.contactService.sendMessage(this.contact,headers)
+   .subscribe(
+      (response: number) => {
+        if(response==1){
+          this.loading=false;
+        console.log(response);
+       console.log('message send successfully.');
+       this._snackBar.open("Your message has been successfully sent.", '', {
+        duration: 3000,
+        panelClass: 'custom-snackbar',
+        });
+      }else{
+        console.log(response);
+        console.log('Failed to send the message.');
+        this.incorrect=true;
+      }
+      this.name= '';  this.email='';this.subject='';this.message='';
+    },
+      (error: HttpErrorResponse) => {
+        console.log('Failed to send the message.');
+        this.name= '';  this.email='';this.subject='';this.message='';
+      }  
+       );
+      }
+    }
+    console.log(this.error);
+     }  
+     isValidEmail(email: string): boolean {
+      // Basic email validation using a regular expression
+      // You can use a more sophisticated regular expression for more accurate validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
 
   }
+  
       
 

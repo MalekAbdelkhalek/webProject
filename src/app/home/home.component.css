@@ -37,6 +37,18 @@
     border-color: rgb(0, 0, 0);
     color: white;
   }
+  .chart-container {
+    width: 48.486%;
+    background-color: #10004b;
+    border-radius: 10px; /* Adjust the radius value as needed */
+    padding: 5px; /* Optional: Add padding for better appearance */
+    margin: 10px;
+
+  }
+  .canvasjs-chart-container {
+    border-radius: 10px; /* Adjust the radius value as needed */
+  }
+  
 
 
   /* Styles specific to big screens */

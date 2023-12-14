@@ -5,6 +5,7 @@ import { environment } from 'src/environment/environment';
 import { Expense } from 'src/app/Expense';
 import { CategoryAndAmount } from './CategoryAndAmount';
 import { SubCatOfHighestCat } from './subCatOfhighestCat';
+import { categoryName } from './categoryName';
 
 
 @Injectable({
@@ -34,5 +35,11 @@ export class ExpenseService {
   }
   public getSubCatOfHighestCat(category:string,headers:HttpHeaders): Observable<SubCatOfHighestCat>{
     return this.http.get<SubCatOfHighestCat>(`${this.apiServerUrl}/api/get/subCategories/${category}`, { headers });
+  }
+  public getExpensesByCategory(category:string,headers:HttpHeaders): Observable<Expense[]>{
+    return this.http.get<Expense[]>(`${this.apiServerUrl}/api/get/expenses/${category}`, { headers });
+  }
+  public getCategoriesNames(headers:HttpHeaders): Observable<categoryName[]>{
+    return this.http.get<categoryName[]>(`${this.apiServerUrl}/api/get/categoriesNames`, { headers });
   }
 }

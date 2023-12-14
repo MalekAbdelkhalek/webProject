@@ -18,6 +18,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactComponent } from './contact/contact.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
+
+
 
 
 
@@ -45,9 +54,10 @@ import { VisualisationComponent } from './visualisation/visualisation.component'
     MatProgressSpinnerModule,
     CanvasJSAngularChartsModule,
     MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatToolbarModule,MatIconModule
+    MatSortModule,MatSelectModule,
+    MatPaginatorModule,MatNativeDateModule,
+    MatToolbarModule,MatIconModule,MatDatepickerModule,
+    MatButtonToggleModule,MatFormFieldModule,MatInputModule
 
   ],
   providers: [],

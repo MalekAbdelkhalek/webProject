@@ -1,118 +1,137 @@
-<div class="container-fluid" *ngIf="!refreshTokenExpired">
+<div class="container-fluid" *ngIf="!refreshTokenExpired" style="max-height: 90%;">
     <div class="row flex-nowrap">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex flex-column position-relative">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light2 d-flex flex-column position-relative" style="width: 13%; background-color: #1c0068;" >
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
           <div class="dropdown pb-4">
-            <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;">
+            <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;font-size: 25px;">
               <i class="fs-4 bi-person"></i>
-                <span class="d-none d-sm-inline mx-1" *ngIf="user">{{user.firstname}}</span>
+                <span class="d-none d-sm-inline mx-1" style="cursor: pointer;font-family:OCR A Std, monospace;" *ngIf="user">{{user.firstname}}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" (click)="onOpenModal('delete')">Delete this account</a></li>
-                <li><a class="dropdown-item" (click)="onOpenModal('update')">Personal information</a></li>
-                <li><a class="dropdown-item" (click)="onOpenModal('changePassword')">change password</a></li>
+                <li><a class="dropdown-item" (click)="onOpenModal('delete')"style="cursor:grab;">Delete this account</a></li>
+                <li><a class="dropdown-item" (click)="onOpenModal('update')"style="cursor:grab;">Personal information</a></li>
+                <li><a class="dropdown-item" (click)="onOpenModal('changePassword')"style="cursor:grab;">change password</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" (click)="onOpenModal('logout')">Log out</a></li>
+                <li><a class="dropdown-item" (click)="onOpenModal('logout')" style="cursor:grab;">Log out</a></li>
             </ul>
           </div>
           <hr class="hr" />
           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li class="nav-item">
                   <a href="/home" class="nav-link align-middle px-0">
-                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="font-family:OCR A Std, monospace;">Home</span>
                   </a>
               </li>
               <li>
                 <hr class="hr " />
                   <a href="/expenses" class="nav-link px-0 align-middle">
-                      <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline">Expenses</span>
+                      <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Expenses</span>
                      </a>
               </li>
               <li>
                 <hr class="hr " />
                   <a href="/visualisation" class="nav-link px-0 align-middle">
-                      <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Visualisation</span> </a>
+                      <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Visualisation</span> </a>
               </li>
               <li>
                 <hr class="hr " />
-                <a href="/contact" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline">Contact</span> </a>
+                <a href="/contact"class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Contact</span> </a>
             </li>
           </ul>
         </div>
       </div>
         
         
-        <div class="col py-3" style="background-color: beige;">
-          <div class="container-fluid" id="main-container">
-            <div class="row flex-nowrap" style="margin-top: -2%;">
+      <div class="col py-3" style="background-image: url('../../assets/images/testbg3.png'); background-size: cover;">
+        <div class="container-fluid" id="main-container">
+            <div class="row flex-nowrap" style="margin-top: 0.1%;">
               <!-- Content Area -->
               <div class="col py-3">
                 <!-- Home Icon and Text -->
-                <div class="d-flex align-items-center justify-content-between" style="margin-top: 2%;">
-                  <div>
-                    <i class="fs-4 bi bi-person-rolodex" style="color: rgb(71, 150, 241);"></i>
-                    <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241); font-family: 'Arial', sans-serif;">Contact</span>
-                  </div>          
+                <div class="d-flex align-items-center justify-content-between" style="margin-top: 0%;">
+                  <div style="font-size: 24px; padding: 10px;">
+                    <i class="bi bi-person-rolodex" style="color: rgb(71, 150, 241);"></i>
+                    <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241);">CONTACT</span>
+                  </div>  
+                  <div class="d-flex align-items-center justify-content-center" style="font-size: 200%; font-weight: bold; margin-top:0%;font-family:Comic Sans MS; color:  rgb(5, 143, 197);">
+                    Contact us
+                  </div>   
+                  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="margin-top: 20px; margin-right: 7%;">
+                  </mat-button-toggle-group>
                 </div>
-                
-
               </div>
             </div>
-          </div>  
-          <section class="border p-4 d-flex justify-content-center mb-4 triangle-container" style="background-color: rgb(145, 222, 253); ">
-            <form id="form" class="text-center" style="width: 100%; max-width: 100%">
-              <h2>Contact us</h2>
+          </div> 
+           
+          <section class="border p-4 d-flex justify-content-center mb-4 triangle-container" style="background-color: rgb(5, 143, 197); margin-top: 2%; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);">
+            <form id="form" class="text-center" style="width: 100%; max-width: 100%; border: 2px solid rgb(23, 0, 49); border-radius: 10px; padding: 20px; background-color: rgb(145, 222, 253);">
           
               <!-- Name input -->
               <div class="mb-4">
-                <label for="name">Name</label>
-                <input type="text" id="name" class="form-control" />
+                <label for="name" style="font-family: Comic Sans MS;" >Name</label>
+                <input type="text" id="name" class="form-control" style="margin-top: 3%;font-family: Comic Sans MS;" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"/>
               </div>
-              
+          
               <!-- Email input -->
               <div class="mb-4">
-                <label for="email">Email address</label>
-                <input type="text" id="email" class="form-control" />
+                <label for="email" style="font-family: Comic Sans MS;">Email address</label>
+                <input type="text" id="email" class="form-control" style="margin-top: 3%;font-family: Comic Sans MS;" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
               </div>
           
               <!-- Subject input -->
               <div class="mb-4">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" class="form-control" />
+                <label for="subject" style="font-family: Comic Sans MS;">Subject</label>
+                <input type="text" id="subject" class="form-control" style="margin-top: 3%;font-family: Comic Sans MS;" [(ngModel)]="subject" [ngModelOptions]="{standalone: true}"/>
               </div>
           
               <!-- Message input -->
               <div class="mb-4">
-                <label for="message">Message</label>
-                <textarea class="form-control" id="message" rows="4"></textarea>
-              </div>
-          
-              <!-- Mail copy -->
-              <div class="form-check mb-4">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="copy"
-                />
-                <label class="form-check-label" for="copy">
-                  Send me copy
-                </label>
+                <label for="message" style="font-family: Comic Sans MS;">Message</label>
+                <textarea class="form-control" id="message" rows="4" style="margin-top: 3%;font-family: Comic Sans MS;"[(ngModel)]="message" [ngModelOptions]="{standalone: true}"></textarea>
               </div>
           
               <!-- Submit button -->
-              <button type="button" class="btn btn-primary my-4">Send</button>
+              <button type="button" class="btn btn-primary my-4" style="width: 100%;font-family: Comic Sans MS;background-color: rgb(5, 143, 197);" (click)="sendMessage()">Send</button>
+              <div class="invalid-field" *ngIf="error" style="color: red; font-family: Comic Sans MS; ">{{error}}</div>
             </form>
           </section>
+           
+          <footer class="text-white fixed-bottom" style="background-color: #1c0068;" >
+            <div class="container py-4">
+              <div class="row text-center">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                  <i class="bi bi-telephone"></i>
+                  <p class="phone ms-2" style="margin-top: 3%;"> +216 25 567 135</p>
+                </div>
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                  <i class="bi bi-envelope"></i>
+                  <p class="mail ms-2" style="margin-top: 3%;"> expensesTracker&#64;gmail.com</p>
+                </div>
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                  <i class="bi bi-house"></i>
+                  <p class="location ms-2" style="margin-top: 3%;"> Tunis - Manouba</p>
+                </div>
+              </div>
+            </div>
+          </footer>
           
-          
+                
         </div>
     </div>
-  
-  </div> 
+  </div>
+  <div *ngIf="loading" class="loading-spinner-overlay">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <mat-spinner diameter="50"></mat-spinner>
+      <!-- Or use an HTML/CSS spinner if not using Angular Material -->
+      <!-- <div class="spinner"></div> -->
+    </div>
+  </div>
+
+
+
   <!-- personal informations modal -->
   <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true" *ngIf="user">
     <!-- Modal content goes here -->
@@ -157,6 +176,9 @@
             </div>
           </form>
         </div>
+        <div class="d-flex justify-content-center pt-3" >
+          <h6  style="color: red;" *ngIf="birthdateError">* Please enter a valid birthdate (2015) *</h6>
+        </div>
         <div class="modal-footer">
           <div *ngIf="!isEditMode">
             <a (click)="isEditMode = true" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit">
@@ -172,6 +194,7 @@
       </div>
     </div>
   </div>
+
   
   <!-- Delete Modal -->
   <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
@@ -213,40 +236,40 @@
        </div>
     </div>
   </div>
-      <!-- change-password Modal -->
-      <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="changePasswordModalLabel">Change password</h5>
-              <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false;" >
-              <span aria-hidden="true">&times;</span>
-              </button>
-           </div>
-              <div class="modal-body">
-                 <form #editForm="ngForm">
-                  <div class="form-group">
-                    <label for="phone">Current password</label>
-                    <input type="{{ showCurrentPassword ? 'text' : 'password' }}" name="password" class="form-control" id="password" [(ngModel)]="currentPassword"required>
-                    <i class="bi bi-eye password-toggle-icon-1" (click)="toggleCurrentPasswordVisibility()" *ngIf="currentPassword || newPassword"></i>       
+    <!-- change-password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="changePasswordModalLabel">Change password</h5>
+            <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false; changePasswordError='';" >
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+            <div class="modal-body">
+               <form #editForm="ngForm">
+                <div class="form-group">
+                  <label for="phone">Current password</label>
+                  <input type="{{ showCurrentPassword ? 'text' : 'password' }}" name="password" class="form-control" id="password" [(ngModel)]="currentPassword"required>
+                  <i class="bi bi-eye password-toggle-icon-1" (click)="toggleCurrentPasswordVisibility()" *ngIf="currentPassword || newPassword"></i>       
+                </div>
+                <div class="form-group" style="margin-top: 4%;">
+                  <label for="address">New password</label>
+                  <input type="{{ showNewPassword ? 'text' : 'password' }}" name="password" class="form-control"  id="nouveauPassword"  [(ngModel)]="newPassword"required>
+                  <i class="bi bi-eye password-toggle-icon-2" (click)="toggleNewPasswordVisibility()" *ngIf="currentPassword || newPassword"></i> 
+                </div>
+                <div class="d-flex justify-content-center pt-3" >
+                  <h6  style="color: red;" *ngIf="changePasswordError">{{changePasswordError}}</h6>
+                </div>
+                  <div class="modal-footer">
+                     <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                     <button   class="btn btn-primary" (click)="changePassword()" >Confirm</button>
                   </div>
-                  <div class="form-group" style="margin-top: 4%;">
-                    <label for="address">New password</label>
-                    <input type="{{ showNewPassword ? 'text' : 'password' }}" name="password" class="form-control"  id="nouveauPassword"  [(ngModel)]="newPassword"required>
-                    <i class="bi bi-eye password-toggle-icon-2" (click)="toggleNewPasswordVisibility()" *ngIf="currentPassword || newPassword"></i> 
-                  </div>
-                  <div class="d-flex justify-content-center pt-3" >
-                    <h6  style="color: red;" *ngIf="!currentPassword && !newPassword && incorrect">* incorrect password entered *</h6>
-                  </div>
-                    <div class="modal-footer">
-                       <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
-                       <button   class="btn btn-primary" (click)="changePassword()" >Confirm</button>
-                    </div>
-                 </form>
-              </div>
-           </div> 
-        </div>
+               </form>
+            </div>
+         </div> 
       </div>
+    </div>
   <!--debut-->
   <div class="container-fluid" id="session-container" >
     <!-- Modal -->

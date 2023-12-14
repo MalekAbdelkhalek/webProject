@@ -1,69 +1,176 @@
 <div class="container-fluid" *ngIf="!refreshTokenExpired">
   <div class="row flex-nowrap">
-    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex flex-column position-relative">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light2 d-flex flex-column position-relative" style="width: 13%; background-color: #1c0068;" >
       <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
         <div class="dropdown pb-4">
-          <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;">
+          <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;font-size: 25px;">
             <i class="fs-4 bi-person"></i>
-              <span class="d-none d-sm-inline mx-1" *ngIf="user">{{user.firstname}}</span>
+              <span class="d-none d-sm-inline mx-1" style="cursor: pointer;font-family:OCR A Std, monospace;" *ngIf="user">{{user.firstname}}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-              <li><a class="dropdown-item" (click)="onOpenModal('delete')">Delete this account</a></li>
-              <li><a class="dropdown-item" (click)="onOpenModal('update')">Personal information</a></li>
-              <li><a class="dropdown-item" (click)="onOpenModal('changePassword')">change password</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('delete')"style="cursor:grab;">Delete this account</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('update')"style="cursor:grab;">Personal information</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('changePassword')"style="cursor:grab;">change password</a></li>
               <li>
                   <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" (click)="onOpenModal('logout')">Log out</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('logout')" style="cursor:grab;">Log out</a></li>
           </ul>
         </div>
         <hr class="hr" />
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
                 <a href="/home" class="nav-link align-middle px-0">
-                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="font-family:OCR A Std, monospace;">Home</span>
                 </a>
             </li>
             <li>
               <hr class="hr " />
                 <a href="/expenses" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline">Expenses</span>
+                    <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Expenses</span>
                    </a>
             </li>
             <li>
               <hr class="hr " />
                 <a href="/visualisation" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Visualisation</span> </a>
+                    <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Visualisation</span> </a>
             </li>
             <li>
               <hr class="hr " />
-              <a href="/contact" class="nav-link px-0 align-middle">
-                  <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline">Contact</span> </a>
+              <a href="/contact"class="nav-link px-0 align-middle">
+                  <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Contact</span> </a>
           </li>
         </ul>
       </div>
     </div>
       
       
-      <div class="col py-3" style="background-color: beige;">
+      <div class="col py-3" style="background-image: url('../../assets/images/testbg3.png'); background-size: cover;">
         <div class="container-fluid" id="main-container">
           <div class="row flex-nowrap" style="margin-top: -2%;">
             <!-- Content Area -->
             <div class="col py-3">
               <!-- Home Icon and Text -->
               <div class="d-flex align-items-center justify-content-between" style="margin-top: 2%;">
-                <div>
-                  <i class="fs-4 bi bi-bar-chart-line" style="color: rgb(71, 150, 241);"></i>
-                  <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241); font-family: 'Arial', sans-serif;">Visualisation</span>
-                </div>          
+                <div style="font-size: 24px; padding: 10px;">
+                  <i class="bi bi-bar-chart-line" style="color: rgb(71, 150, 241);"></i>
+                  <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241);">VISUALISATION</span>
+                </div>        
               </div>
               
 
             </div>
           </div>
         </div>  
-        
-        
+        <div >
+          <div class="centered" >
+          <p style="  font-family:Comic Sans MS;">Select the desired year options below.</p>
+          <mat-form-field>
+            <mat-label style="color: rgb(255, 255, 255);">Year</mat-label>
+            <mat-select [(ngModel)]="selectedYear1" (selectionChange)="updateChartOptionsPerMonths(selectedYear1)">
+              <mat-option *ngFor="let year of years" [value]="year.value">
+                {{year.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> 
+          </div>
+          <canvasjs-chart [hidden]="noExpensesPerMonths"[options]="chartOptionsPerMonths"  [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstance1($event)"></canvasjs-chart>  
+          <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="noExpensesPerMonths" style="margin-top: 2%;">
+            <div class="alert alert-info" role="alert">
+              <h4 class="alert-heading">no expenses !</h4>
+              <p>no expenses added the year: {{selectedYear1}}</p>
+            </div>
+          </div>   
+        </div>    
+        <hr class="hr " style="height:3px; color: #1c0068; background-color: #000000; margin-top:20px ;"/>
+        <div class="container" >
+          <div class="centered">
+          <h1 style="  font-family:Comic Sans MS;"><b>Expenses per day</b></h1>
+          <p style="  font-family:Comic Sans MS;">Select the desired month and year from the options below.</p>
+          </div>
+          <div class="form-fields">
+          <mat-form-field>
+            <mat-label style="color: rgb(255, 255, 255);">Year</mat-label>
+            <mat-select [(ngModel)]="selectedYear" (selectionChange)="updateChartData()">
+              <mat-option *ngFor="let year of years" [value]="year.value">
+                {{year.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>      
+          <mat-form-field>
+            <mat-label style="color: rgb(255, 255, 255);">Month</mat-label>
+            <mat-select [(ngModel)]="selectedMonth" (selectionChange)="updateChartData()">
+              <mat-option *ngFor="let month of months" [value]="month.value">
+                {{month.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>   
+          <canvasjs-chart [options]="chartOptions" [hidden]="noExpensesPerMonth" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
+          <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="noExpensesPerMonth" style="margin-top: 2%;">
+            <div class="alert alert-info" role="alert">
+              <h4 class="alert-heading">no expenses !</h4>
+              <p>no expenses added the month: {{selectedMonth}} {{selectedYear}}</p>
+            </div>
+          </div>  
+        </div> 
+        <hr class="hr " style="height:3px; color: #1c0068; background-color: #000000; margin-top:20px ;"/>
+        <div class="container" >
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <p style="  font-family:Comic Sans MS;">Select the desired month, year and category from the options below.</p>
+              <div class="form-fields">
+              <mat-form-field style="width: 18%;">
+                <mat-label style="color: rgb(255, 255, 255);">Year</mat-label>
+                <mat-select [(ngModel)]="selectedYearForCategory" (selectionChange)="getExpensesByCategory()">
+                  <mat-option [value]=0>
+                    No year Selected
+                  </mat-option>
+                  <mat-option *ngFor="let year of years" [value]="year.value">
+                    {{year.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>      
+              <mat-form-field style="width: 18%;">
+                <mat-label style="color: rgb(255, 255, 255);">Month</mat-label>
+                <mat-select [(ngModel)]="selectedMonthForCategory" (selectionChange)="getExpensesByCategory()">
+                  <mat-option [value]="''">
+                    No Month Selected
+                  </mat-option>
+                  <mat-option *ngFor="let month of months" [value]="month.value">
+                    {{month.value}}
+                  </mat-option>
+                </mat-select>                
+              </mat-form-field>
+              <mat-form-field style="width: 18%;">
+                <mat-label style="color: rgb(255, 255, 255);">Catgeogry</mat-label>
+                <mat-select [(ngModel)]="selectedCategory" (selectionChange)="getExpensesByCategory()">
+                  <mat-option *ngFor="let category of categories" [value]="category.category">
+                    {{category.category}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              </div>
+              <h1 style="  font-family:Comic Sans MS;"><b>{{selectedCategory}}</b></h1>
+            </div>
+          </div>
+          <div class="row" [hidden]="noExpensesPerCategory">
+            <div class="col-md-6">
+              <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstancePie($event)"></canvasjs-chart>
+            </div>
+            <div class="col-md-6">
+              <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstanceBar($event)"></canvasjs-chart>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-xl-12" style="margin-top: 2%;" *ngIf="noExpensesPerCategory">
+            <div class="alert alert-info alert-custom" role="alert">
+              <h4 class="alert-heading">no expenses by catgeory !</h4>
+              <p>no expenses by category added .</p>
+            </div>
+          </div>
+        </div> 
+                              
+    
       </div>
   </div>
 
@@ -111,6 +218,9 @@
             <input type="text" [disabled]="true"  name="phone" class="form-control" [(ngModel)]="user.phone"  id="phone"  required>
           </div>
         </form>
+      </div>
+      <div class="d-flex justify-content-center pt-3" >
+        <h6  style="color: red;" *ngIf="birthdateError">* Please enter a valid birthdate (2015) *</h6>
       </div>
       <div class="modal-footer">
         <div *ngIf="!isEditMode">
@@ -174,7 +284,7 @@
          <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="changePasswordModalLabel">Change password</h5>
-            <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false;" >
+            <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false; changePasswordError='';" >
             <span aria-hidden="true">&times;</span>
             </button>
          </div>
@@ -191,7 +301,7 @@
                   <i class="bi bi-eye password-toggle-icon-2" (click)="toggleNewPasswordVisibility()" *ngIf="currentPassword || newPassword"></i> 
                 </div>
                 <div class="d-flex justify-content-center pt-3" >
-                  <h6  style="color: red;" *ngIf="!currentPassword && !newPassword && incorrect">* incorrect password entered *</h6>
+                  <h6  style="color: red;" *ngIf="changePasswordError">{{changePasswordError}}</h6>
                 </div>
                   <div class="modal-footer">
                      <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->

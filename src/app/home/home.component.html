@@ -1,96 +1,95 @@
 <div class="container-fluid" *ngIf="!refreshTokenExpired">
   <div class="row flex-nowrap">
-    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex flex-column position-relative">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light2 d-flex flex-column position-relative" style="width: 13%; background-color: #1c0068;" >
       <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" >
         <div class="dropdown pb-4">
-          <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;">
+          <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: 15%;font-size: 25px;">
             <i class="fs-4 bi-person"></i>
-              <span class="d-none d-sm-inline mx-1" *ngIf="user">{{user.firstname}}</span>
+              <span class="d-none d-sm-inline mx-1" style="cursor: pointer;font-family:OCR A Std, monospace;" *ngIf="user">{{user.firstname}}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-              <li><a class="dropdown-item" (click)="onOpenModal('delete')">Delete this account</a></li>
-              <li><a class="dropdown-item" (click)="onOpenModal('update')">Personal information</a></li>
-              <li><a class="dropdown-item" (click)="onOpenModal('changePassword')">change password</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('delete')"style="cursor:grab;">Delete this account</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('update')"style="cursor:grab;">Personal information</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('changePassword')"style="cursor:grab;">change password</a></li>
               <li>
                   <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" (click)="onOpenModal('logout')">Log out</a></li>
+              <li><a class="dropdown-item" (click)="onOpenModal('logout')" style="cursor:grab;">Log out</a></li>
           </ul>
         </div>
         <hr class="hr" />
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
                 <a href="/home" class="nav-link align-middle px-0">
-                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline" style="font-family:OCR A Std, monospace;">Home</span>
                 </a>
             </li>
             <li>
               <hr class="hr " />
                 <a href="/expenses" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline">Expenses</span>
+                    <i class="fs-4 bi bi-currency-exchange"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Expenses</span>
                    </a>
             </li>
             <li>
               <hr class="hr " />
                 <a href="/visualisation" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Visualisation</span> </a>
+                    <i class="fs-4 bi bi-bar-chart-line"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Visualisation</span> </a>
             </li>
             <li>
               <hr class="hr " />
               <a href="/contact"class="nav-link px-0 align-middle">
-                  <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline">Contact</span> </a>
+                  <i class="fs-4 bi bi-person-rolodex"></i> <span class="ms-1 d-none d-sm-inline"style="font-family:OCR A Std, monospace;">Contact</span> </a>
           </li>
         </ul>
       </div>
     </div>
       
       
-      <div class="col py-3" style="background-color: beige;">
+      <div class="col py-3" style="background-image: url('../../assets/images/testbg3.png'); background-size: cover;">
         <div class="container-fluid" id="main-container">
           <div class="row flex-nowrap" style="margin-top: -2%;">
             <!-- Content Area -->
             <div class="col py-3">
               <!-- Home Icon and Text -->
               <div class="d-flex align-items-center justify-content-between" style="margin-top: 2%;">
-                <div>
+                <div style="font-size: 24px; padding: 10px;">
                   <i class="bi bi-house" style="color: rgb(71, 150, 241);"></i>
-                  <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241); font-family: 'Arial', sans-serif;">Home</span>
-                </div>          
+                  <span class="ms-1" style="font-weight: bold; color: rgb(71, 150, 241);">HOME</span>
+                </div>                        
                 <!--<div class="d-none d-sm-flex align-items-center justify-content-center pb-3 mb-md-0 text-white text-decoration-none">
                  <img src="../../assets/images/comwork.png" width="130%" height="50vw" style="margin-left: -20%;">
                 </div> -->
                 <div class="d-flex d-sm-none align-items-center"> <!-- This div will be shown on extra small screens only -->
                   <i class="bi bi-calendar-plus" style="color: rgb(71, 150, 241); font-size: 24px;" (click)="onOpenModal('expense')"></i>
                 </div>
-                <div class="d-none d-sm-flex align-items-center addEXPENSE"  style="cursor: pointer; color: rgb(0, 37, 244); " (click)="onOpenModal('expense')" > 
+                <div class="d-none d-sm-flex align-items-center addEXPENSE"  style="cursor: pointer; color: rgb(0, 37, 244);font-size: 1vw; padding: 10px;"  (click)="onOpenModal('expense')" > 
                   <i class="bi bi-calendar2-plus"></i>
                   <span class="ms-1" style="font-family: 'Arial', sans-serif;" >Add your expenses</span>
                 </div>
               </div>
               
               <!-- Card -->
-              <div class="card mt-4" *ngIf="user">
-                <div class="card-body" style="background-color: rgb(154, 201, 255);">
+              <div class="card mt-4" *ngIf="user" style=" border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                <div class="card-body" style="background-color: rgb(0, 119, 255);">
                   <div class="d-flex justify-content-between flex-wrap"> <!-- flex-wrap for wrapping items on smaller screens -->
-                    <h5 class="card-title" style="font-family: Verdana, sans-serif;">{{user.firstname}} {{user.lastname}}</h5>
-                    <p class="card-text" style="font-family: Verdana, sans-serif;">Data scientist</p>
+                    <h5 class="card-title" style="font-family: Verdana, sans-serif; color: aliceblue; font-size: 20px;">{{user.firstname}} {{user.lastname}}</h5>
                   </div>
                 </div>
-                <div class="card-footer" style="background-color: rgb(216, 234, 255);">
+                <div class="card-footer" style="background-color: rgb(0, 40, 85); height: 50px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
                   <div class="d-flex justify-content-between flex-wrap"> <!-- flex-wrap for wrapping items on smaller screens -->
-                    <p class="mb-0" style="font-family: Verdana, sans-serif;">{{user.email}} / {{user.phone}}</p>
+                    <p class="mb-0" style="font-family: Verdana, sans-serif;  color: aliceblue; font-size: 20px;">{{user.email}} / {{user.phone}}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div> 
-        <hr class="hr " />
-        <h3 style="margin-left: 1%; color: rgb(80, 44, 0);">Recent expenses</h3>
+        <hr class="hr " style="height:3px; color: #1c0068; background-color: #000000; margin-top:20px ;"/>
+        <h3 style="margin-left: 1%; color: rgb(0, 0, 0); font-size: 60px;margin-top:30px "><b>Recent expenses</b></h3>
         <!-- Loop through each leave in the 'leaves' array -->
-        <ng-container *ngFor="let expense of expenses" style="margin-top: 2%;">
+        <ng-container *ngFor="let expense of expenses" style="margin-top:0px ">
           <!-- Card -->
-          <div class="card mt-4 " style="width: auto; border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); ">
+          <div class="card mt-4 " style="width: auto; border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
             <div class="card-body" style="max-height: 50%; overflow: hidden;">
               <h5 class="card-title" style="font-family: Verdana, sans-serif; color: rgb(143, 86, 0);"><b>Expense informations</b></h5>
               <div class="row">
@@ -135,20 +134,20 @@
             <p>no expenses added yet .</p>
           </div>
         </div> <br>
-        <hr class="hr " />
+        <hr class="hr " style="height:3px; color: #1c0068; background-color: #000000; margin-top:20px ;"/> 
         <div class="container">
           <div class="row">
             <div class="col-md-12 text-center">
-              <h2>Highest Categories Used</h2>
+              <h2 style="font-size: 40px; color: #1c0068; margin-top: 2%;">Expenses categories in 2023</h2>
             </div>
           </div>
-          <div class="row" *ngIf="categoriesUsed && !(categoriesUsed.length === 0)">
-            <div class="col-md-6">
-              <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}" *ngIf="fixed"></canvasjs-chart>
+          <div class="row" *ngIf="categoriesUsed && !(categoriesUsed.length === 0)" >
+            <div class="col-md-6 chart-container" >
+              <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}" *ngIf="fixed" ></canvasjs-chart>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 chart-container">
               <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'360px'}" *ngIf="fixed"></canvasjs-chart>
-            </div>
+            </div>            
           </div>
           <div class="col-lg-12 col-md-12 col-xl-12" *ngIf="categoriesUsed && categoriesUsed.length === 0" style="margin-top: 2%;">
             <div class="alert alert-info alert-custom" role="alert">
@@ -204,6 +203,9 @@
             <input type="text" [disabled]="true"  name="phone" class="form-control" [(ngModel)]="user.phone"  id="phone"  required>
           </div>
         </form>
+      </div>
+      <div class="d-flex justify-content-center pt-3" >
+        <h6  style="color: red;" *ngIf="birthdateError">* Please enter a valid birthdate (2015) *</h6>
       </div>
       <div class="modal-footer">
         <div *ngIf="!isEditMode">
@@ -267,7 +269,7 @@
          <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="changePasswordModalLabel">Change password</h5>
-            <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false;" >
+            <button id="close-password"type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showCurrentPassword= false; showNewPassword=false;currentPassword='';newPassword='' ; incorrect=false; changePasswordError='';" >
             <span aria-hidden="true">&times;</span>
             </button>
          </div>
@@ -284,7 +286,7 @@
                   <i class="bi bi-eye password-toggle-icon-2" (click)="toggleNewPasswordVisibility()" *ngIf="currentPassword || newPassword"></i> 
                 </div>
                 <div class="d-flex justify-content-center pt-3" >
-                  <h6  style="color: red;" *ngIf="!currentPassword && !newPassword && incorrect">* incorrect password entered *</h6>
+                  <h6  style="color: red;" *ngIf="changePasswordError">{{changePasswordError}}</h6>
                 </div>
                   <div class="modal-footer">
                      <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
@@ -402,7 +404,7 @@
                 
                 <div class="modal-footer">
                    <!--<button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
-                   <button class="btn btn-primary" (click)="onAddExpense()">Soumettre</button>
+                   <button class="btn btn-primary" (click)="onAddExpense()">Submit</button>
                 </div>
              </form>
           </div>

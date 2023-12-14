@@ -38,9 +38,12 @@ interface ChartOptions {
   theme: string,
   axisY: {
     includeZero: boolean;
+    valueFormatString: string;
+
   };
   data: {
     type: string;
+    yValueFormatString: string,
     indexLabelFontColor: string;
     dataPoints: ChartDataPoint[];
   }[];
@@ -255,12 +258,11 @@ export class HomeComponent {
     console.log("access token: "+this.accesstoken);
     console.log("refresh token: "+this.refreshtoken);
     this.getHighestCategories();
-    console.log('lena');
-    console.log(this.highestCategories);
-
     this.findCurrentUser();    
     this.getLastExpenses();
     this.getSubcategories();
+    this.getSubCatOfHighestCat("Food");
+
     this.getCategories();
 
       
@@ -428,11 +430,17 @@ public getSubcategories(): void {
     this.updatecurrentUser(this.userinfo);
 
   }
+  birthdateError=false;
+
   saveChanges(): void {
+    if(new Date(this.user.birthdate).getFullYear() > 2015){
+      this.birthdateError=true;
+
+    }else{
     this.onUpdate();
     this.isEditMode = false;
     const button = document.getElementById('close-update');
-    button?.click();
+    button?.click();}
   }
   
   cancelEdit(): void {
@@ -473,7 +481,11 @@ public getSubcategories(): void {
  currentPassword: string = '';
  newPassword: string = '';
  changePasswordForm!:changePasswordForm;
+ changePasswordError='';
  public changePassword(): void {
+  if(!this.currentPassword || !this.newPassword){
+    this.changePasswordError="Would you fill all the fields"
+  }else {
   // Set the authorization header with the access token
   const headers = new HttpHeaders({
   Authorization: `Bearer ${this.accesstoken}`,
@@ -500,7 +512,7 @@ public getSubcategories(): void {
       }else{
         console.log(response);
         console.log('Failed to change the password.');
-        this.incorrect=true;
+        this.changePasswordError="Incorrect password entered"
       }
       this.showCurrentPassword= false;  this.showNewPassword=false;this.currentPassword='';this.newPassword='';
     },
@@ -510,7 +522,7 @@ public getSubcategories(): void {
          }  
        );
    
-   }    
+   }  }  
   expense:any;
   addingDate !:Date| undefined;;
   amount :number=0;
@@ -562,7 +574,7 @@ public getSubcategories(): void {
       this.error="* Please would you fill all the fields *";
     }else{
       if(!this.isDateBeforeTenDays()){
-        this.error = "* Please fill in a birthday within the last 10 days *";
+        this.error = "* Please fill the date within the last 10 days *";
       }else if(this.amount<=0){
         this.error="* Please enter a valid amount *";
       }else{
@@ -842,8 +854,7 @@ public getSubcategories(): void {
               this.subCatOfHighestCat[category] = [];
             }
     
-             this.subCatOfHighestCat[category].push(response);
-           },
+             this.subCatOfHighestCat[category].push(response);           },
            (error: HttpErrorResponse) => {
              alert(error.message);
              console.log('failed to extract the sub categories');
@@ -862,10 +873,13 @@ public getSubcategories(): void {
      theme: "light2",
 
       axisY: {
-        includeZero: true
+        includeZero: true,
+        valueFormatString: "#0dt"
+
       },
       data: [{
         type: "pie",
+        yValueFormatString: "#dt",
         indexLabelFontColor: "#5A5757",
         dataPoints: []
       }]
@@ -876,11 +890,12 @@ public getSubcategories(): void {
       theme: "light2",
 
       axisY: {
-      includeZero: true
+      includeZero: true,
+      valueFormatString: "#0dt"
       },
       data: [{
       type: "column", //change type to bar, line, area, pie, etc
-      //indexLabel: "{y}", //Shows y value on all Data Points
+      yValueFormatString: "#dt",
       indexLabelFontColor: "#5A5757",
       dataPoints: []
       }]
@@ -894,12 +909,22 @@ public getSubcategories(): void {
     y: category.totalAmount,
 
   }));
-  // Assuming highestCategories is an array with objects having 'category' and 'totalAmount' properties
+  // Assuming this.categoriesUsed is an array of objects with 'category' and 'totalAmount' properties
+
+  // Find the category with the highest total amount
+  const highestCategory = this.categoriesUsed.reduce((max, category) => (category.totalAmount > max.totalAmount ? category : max), this.categoriesUsed[0]);
+  
+  // Find the category with the lowest total amount
+  const lowestCategory = this.categoriesUsed.reduce((min, category) => (category.totalAmount < min.totalAmount ? category : min), this.categoriesUsed[0]);
+  
+  // Update dataPoints array with indexLabel for the highest and lowest categories
   this.chartOptions2.data[0].dataPoints = this.categoriesUsed.map((category) => ({
     label: category.category,
     y: category.totalAmount,
-
+    indexLabel: category === highestCategory ? "Highest\u2191" : (category === lowestCategory ? "Lowest\u2193" : "")
   }));
+
+
 
   this.fixed=true;
      // console.log(this.chartOptions.data);

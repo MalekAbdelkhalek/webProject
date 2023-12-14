@@ -40,8 +40,10 @@ export class ExpensesComponent {
   category: string = '';
   subCategory: string = '';
   month:string='';
+  year:number=0;
 
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  years: number[] = Array.from({ length: 24 }, (_, index) => 2023 - index);
   expensesToShow!: Expense[];
 
   expenses!: Expense[];
@@ -60,7 +62,9 @@ export class ExpensesComponent {
             ...expense,
             addingdate: new Date(expense.addingdate),
           }));
-          // Organize expenses into expenseData based on category and subcategories
+          if(this.expenses && !(this.expenses.length === 0)){
+            this.NoExpensesToShow=false;
+           // Organize expenses into expenseData based on category and subcategories
           this.expenses.forEach(expense => {
             if (!this.expenseData[expense.category]) {
               // If category doesn't exist, create it
@@ -85,6 +89,10 @@ export class ExpensesComponent {
 
           // Update dataSource with expenses
           this.dataSource.data = this.expenses;
+          }else{
+            this.NoExpensesToShow=true;
+          }
+
 
           console.log('Categories:', this.categories);
           console.log('Expense Data:', this.expenseData);
@@ -100,16 +108,25 @@ export class ExpensesComponent {
       this.category = '';
       this.subCategory = '';
       this.month='';
+      this.year=0;
   }
     /*onCategoryChange() {
       // Reset subCategory when the category changes
       this.subCategory = this.expenseData[this.category]?.subcategories[0] || '';
     }*/
+    NoExpensesToShow=true;
       // Filter and update expensesToShow
       filterExpenses(): void {
         // Copy the original expenses array
         this.expensesToShow = [...this.expenses];
-      
+        
+        // Filter by year
+        if (this.year) {
+          this.expensesToShow = this.expensesToShow.filter(expense =>
+            expense.addingdate.getFullYear() == this.year
+          );
+          
+        }
         // Filter by month
         if (this.month) {
           this.expensesToShow = this.expensesToShow.filter(expense =>
@@ -130,12 +147,20 @@ export class ExpensesComponent {
             expense.subcategory.toLowerCase() === this.subCategory.toLowerCase()
           );
         }
-        this.dataSource.data = this.expensesToShow;
+        if(this.expensesToShow && !(this.expensesToShow.length === 0)){
+          this.NoExpensesToShow=false;
+          this.dataSource.data = this.expensesToShow;
+          console.log('expensesToShow:', this.expensesToShow);
+        }else{
+          this.NoExpensesToShow=true;
+        }
         const button = document.getElementById('close-filter');
         button?.click();
-        console.log('expensesToShow:', this.expensesToShow);
+
+
       }
       ResetExpenses(): void {
+        this.NoExpensesToShow=false;
         this.dataSource.data=this.expenses;
       }
   // Utility function to extract the month from a Date object
@@ -220,8 +245,6 @@ export class ExpensesComponent {
     const currentTimestamp = Math.floor(Date.now() / 1000);
     const tokenExpiration = decodedToken.exp;
     this.refreshTokenExpired = (tokenExpiration - currentTimestamp)<=10;
-    console.log(this.refreshtoken);
-    console.log(this.refreshTokenExpired);
   }
   checkAccessTokenExpiration(): void {
     const decodedToken: any = jwtDecode(this.accesstoken);
@@ -232,12 +255,7 @@ export class ExpensesComponent {
     
     // Check if the remaining time is less than or equal to 5 seconds
     this.accessTokenExpired = remainingTimeInSeconds <= 5;
-    
-    if (this.accessTokenExpired) {
-      console.log("Token is expiring within 5 seconds.");
-    } else {
-      console.log("Token is not expiring within 5 seconds.");
-    }
+
     
   }
   public refreshToken(): void {
@@ -282,7 +300,6 @@ export class ExpensesComponent {
     // Check accessToken expiration periodically
     setInterval(() => {
       if(!this.accessTokenExpired){
-        console.log("15secs")
         this.checkAccessTokenExpiration();
       if(this.accessTokenExpired && !this.refreshTokenExpired){
         this.refreshToken();
@@ -293,7 +310,6 @@ export class ExpensesComponent {
     // Check refreshToken expiration periodically
     setInterval(() => {
       if(!this.refreshTokenExpired){
-        console.log("120secs")
         this.checkRefreshTokenExpiration();
       if(this.refreshTokenExpired){
         this.onOpenSessionExpired();
@@ -388,11 +404,17 @@ export class ExpensesComponent {
     this.updatecurrentUser(this.userinfo);
 
   }
+  birthdateError=false;
+
   saveChanges(): void {
+    if(new Date(this.user.birthdate).getFullYear() > 2015){
+      this.birthdateError=true;
+
+    }else{
     this.onUpdate();
     this.isEditMode = false;
     const button = document.getElementById('close-update');
-    button?.click();
+    button?.click();}
   }
   
   cancelEdit(): void {
@@ -433,7 +455,11 @@ export class ExpensesComponent {
  currentPassword: string = '';
  newPassword: string = '';
  changePasswordForm!:changePasswordForm;
+ changePasswordError='';
  public changePassword(): void {
+  if(!this.currentPassword || !this.newPassword){
+    this.changePasswordError="Would you fill all the fields"
+  }else {
   // Set the authorization header with the access token
   const headers = new HttpHeaders({
   Authorization: `Bearer ${this.accesstoken}`,
@@ -460,7 +486,7 @@ export class ExpensesComponent {
       }else{
         console.log(response);
         console.log('Failed to change the password.');
-        this.incorrect=true;
+        this.changePasswordError="Incorrect password entered"
       }
       this.showCurrentPassword= false;  this.showNewPassword=false;this.currentPassword='';this.newPassword='';
     },
@@ -470,7 +496,7 @@ export class ExpensesComponent {
          }  
        );
    
-   }    
+   }  }    
 
 
 
